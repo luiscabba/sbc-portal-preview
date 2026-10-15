@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=1440">
 <title>Board</title>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;family=Arimo:wght@400;700&amp;family=Source+Serif+4:wght@400;600&amp;family=Caveat:wght@500&amp;display=swap">
 <style>
 body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
 a{color:#1F4FD1}a:hover{color:#163B9E}
@@ -89,15 +88,82 @@ a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
 .panel{transition:box-shadow .2s}
 :focus-visible{outline:2px solid #1F4FD1;outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
-</style>
 
+.top a{color:#5F6573;text-decoration:none}.top b{color:#0F1115;font-weight:500}
+h2{font-size:14px;font-weight:600;margin:0}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.ph{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-bottom:1px solid #E6E8EC;font-weight:500;box-sizing:border-box}
+.pick{width:100%;border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer;border-radius:6px;display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 10px;box-sizing:border-box}
+.pick.on{background:#EEF2FD}
+.pick:hover{background:#F7F8FA}.pick.on:hover{background:#EEF2FD}
+/* job strip */
+.job{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF;overflow:hidden}
+.job>div{padding:12px 14px;display:flex;flex-direction:column;gap:4px;position:relative}
+.job>div+div{border-left:1px solid #E6E8EC}
+.job .k{font-size:11px;font-weight:500;color:#8A8F9C;display:flex;align-items:center;gap:6px}
+.job .v{font-weight:500;color:#0F1115}
+.job .you{background:#F5F8FF}
+.job .you .k{color:#1F4FD1}
+/* AI vs officer */
+.ai{border:1px dashed #9AA9D6;border-radius:8px;background:#FAFBFF;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.aitag{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:999px;border:1px dashed #9AA9D6;color:#3A4E8C;font-size:11px;font-weight:500;background:#FFFFFF;white-space:nowrap}
+.aitag svg{width:12px;height:12px}
+.youtag{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:999px;background:#0F1115;color:#FFFFFF;font-size:11px;font-weight:500;white-space:nowrap}
+.src{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 10px;border:1px solid #E6E8EC;border-radius:6px;background:#FFFFFF;font:inherit;color:inherit;cursor:pointer;text-align:left;width:100%;box-sizing:border-box}
+.src.on{border-color:#1F4FD1;box-shadow:0 0 0 1px #1F4FD1 inset}
+.num{width:18px;height:18px;border-radius:999px;background:#1F4FD1;color:#FFFFFF;display:inline-grid;place-items:center;font:500 10px 'Geist Mono',monospace;flex:none}
+.num.w{background:#B87400}
+.num.m{background:#FFFFFF;color:#A8231B;box-shadow:inset 0 0 0 1.5px #A8231B}
+.dec{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border:1px solid #E1E3E8;border-radius:8px;background:#FFFFFF;font:inherit;color:inherit;cursor:pointer;text-align:left;min-height:56px;box-sizing:border-box}
+.dec b{font-weight:600}
+.dec span{font-size:12px;color:#5F6573}
+.dec:hover{border-color:#B9C3E0}
+.dec.on{border-color:#1F4FD1;background:#EEF2FD}
+.dec.pri.on{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.dec.pri.on span{color:#DCE5FF}
+/* document viewer */
+.viewer{background:#E9EBEF;border-radius:8px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.vbar{display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;background:#FFFFFF;border-bottom:1px solid #E6E8EC;box-sizing:border-box}
+.seg2{display:inline-flex;border:1px solid #E1E3E8;border-radius:6px;overflow:hidden}
+.seg2 button{height:26px;padding:0 10px;border:0;background:#FFFFFF;font:500 12px 'Geist',sans-serif;color:#3D4250;cursor:pointer}
+.seg2 button.on{background:#0F1115;color:#FFFFFF}
+.stage{padding:22px;display:flex;justify-content:center;overflow:auto}
+.paper{width:100%;max-width:560px;background:#FFFFFF;box-shadow:0 1px 2px rgba(15,17,21,.12),0 8px 24px rgba(15,17,21,.08);padding:36px 40px 40px;box-sizing:border-box;color:#1B1D22;position:relative;font-family:'Arimo',Arial,sans-serif;font-size:11.5px;line-height:1.45}
+.paper.serif{font-family:'Source Serif 4',Georgia,serif;font-size:12px}
+.paper .gl{display:block;font-family:'Geist',sans-serif;font-size:10.5px;color:#3A4E8C;margin-top:2px;font-style:normal}
+.paper.nog .gl{display:none}
+.paper table{border-collapse:collapse;width:100%}
+.paper td,.paper th{border:1px solid #9CA0A8;padding:5px 6px;vertical-align:top;text-align:left}
+.paper th{font-weight:700;background:#F4F4F4;font-size:10.5px}
+.rh{display:grid;grid-template-columns:1fr auto;border-bottom:1.5px solid #1B1D22;padding-bottom:6px;margin-bottom:10px;font-size:10.5px}
+.ri{display:grid;grid-template-columns:22px minmax(0,1fr);gap:4px 6px;padding:5px 0;border-bottom:1px solid #DADCE0}
+.ri .n{font-weight:700}
+.ri .l{font-weight:700}
+.hl{position:relative;border-radius:2px}
+.hl.on{background:rgba(31,79,209,.10);box-shadow:0 0 0 2px #1F4FD1}
+.hl.on.w{background:rgba(224,160,48,.16);box-shadow:0 0 0 2px #E0A030}
+.hl .pin{display:none;position:absolute;left:-30px;top:2px}
+.hl.on .pin{display:inline-grid}
+.seal{width:76px;height:76px;border-radius:999px;border:2px solid #4A5A8F;color:#4A5A8F;display:grid;place-items:center;text-align:center;font:600 7.5px/1.25 'Arimo',sans-serif;letter-spacing:.06em;transform:rotate(-8deg);opacity:.85}
+.sig{font-family:'Caveat',cursive;font-size:22px;color:#22305E;line-height:1}
+.stamp{position:absolute;top:18px;right:18px;border:1.5px solid #B87400;color:#8A5600;font:600 10px 'Geist',sans-serif;padding:4px 8px;border-radius:4px;transform:rotate(3deg);background:#FFFBF2;letter-spacing:.02em}
+.missing{border:1.5px dashed #C9CDD4;border-radius:8px;background:#FAFAFB;padding:28px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;color:#5F6573;max-width:420px;margin:40px auto}
+.chain{display:flex;flex-direction:column}
+.node{border:1px solid #E1E3E8;border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;background:#FFFFFF}
+.node.gap{border:1px dashed #E0A030;background:#FFFBF2}
+.line{width:1px;height:12px;background:#CDD1D8;margin-left:16px}
+.colgoal{font-size:12px;color:#5F6573;padding:0 4px 4px;line-height:1.35}
+.who{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#8A8F9C;padding:0 4px}
+.q{font-size:18px;font-weight:600;letter-spacing:-.01em;line-height:1.3;margin:0}
+.look{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+.look li{display:flex;gap:8px;align-items:flex-start}
+.look li::before{content:"";width:5px;height:5px;border-radius:999px;background:#8A8F9C;margin-top:7px;flex:none}
+</style>
 <link rel="stylesheet" href="looks.css">
 <script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
 </head>
 <body>
 <div id="root"></div>
 <template id="tpl">
-
 <div class="app">
   <aside class="side">
     <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
@@ -110,20 +176,20 @@ a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
     </nav>
     <div class="me"><span class="av">A</span>Officer A</div>
   </aside>
-
   <main class="main">
+
     <div class="top"><b>Board</b></div>
     <div class="page">
-      <div style="display: flex; align-items: center; gap: 12px">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
         <h1>Board</h1>
-        <span class="sub">Open a card to act on it.</span>
+        <span class="sub">AI reads uploads first. You decide.</span>
         <span style="margin-left: auto; display: flex; gap: 8px"><button class="btn">Mine</button><button class="btn">Filter</button></span>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 8px">
         <div class="groups">
-          <span class="g todo">To do <span class="badge info mono">7</span></span>
-          <span class="g">Waiting on company <span class="badge mono">2</span></span>
+          <span class="g todo">Your move <span class="badge info mono">7</span></span>
+          <span class="g">Company's move <span class="badge mono">2</span></span>
           <span class="g">Done <span class="badge mono">3</span><span class="muted" style="margin-left: auto; font-weight: 400">This week</span></span>
         </div>
 
@@ -131,6 +197,7 @@ a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
           <sc-for list="{{steps}}" as="col" hint-placeholder-count="3">
             <section class="col">
               <div class="ch"><span class="step">{{col.step}}</span>{{col.title}}<span class="ct">{{col.count}}</span></div>
+              <div class="colgoal">{{col.goal}}</div>
               <sc-for list="{{col.cards}}" as="c" hint-placeholder-count="2">
                 <div class="card {{c.cls}}">
                   <div class="ct1"><span class="nm">{{c.name}}</span><span class="mono {{c.dayCls}}" style="font-size: 11px">{{c.days}}</span></div>
@@ -143,17 +210,19 @@ a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
 
           <section class="col" style="background: transparent; border: 1px dashed #D5D8DF">
             <div class="ch">Uploading<span class="ct">2</span></div>
+            <div class="colgoal">Waiting on the company</div>
             <sc-for list="{{waiting}}" as="c" hint-placeholder-count="2">
               <div class="card wait">
                 <div class="ct1"><span class="nm">{{c.name}}</span><span class="mono muted" style="font-size: 11px">{{c.days}}</span></div>
                 <div style="display: flex; align-items: center; gap: 8px"><div class="bar"><span style="width: {{c.pct}}"></span></div><span class="mono muted" style="font-size: 11px">{{c.progress}}</span></div>
-                <div class="foot"><span class="muted" style="font-size: 12px">Documents</span><button class="btn sm">Remind</button></div>
+                <div class="foot"><span class="muted" style="font-size: 12px">{{c.what}}</span><button class="btn sm">Remind</button></div>
               </div>
             </sc-for>
           </section>
 
           <section class="col">
             <div class="ch">Decided<span class="ct">3</span></div>
+            <div class="colgoal">Signed</div>
             <sc-for list="{{done}}" as="c" hint-placeholder-count="3">
               <a href="v2Company.dc.html" class="card" style="text-decoration: none; color: #0F1115">
                 <div class="ct1"><span class="nm">{{c.name}}</span><span class="mono muted" style="font-size: 11px">{{c.day}}</span></div>
@@ -163,39 +232,38 @@ a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
           </section>
         </div>
       </div>
+
     </div>
   </main>
 </div>
 </template>
-<script>window.SBC_ROLES = {"v2Login": "officer", "cRegister": "company", "v2Board": "officer", "v2Company": "officer", "pcHome": "company", "pcChecklist": "company", "v2Check": "officer", "v2Evidence": "officer", "v2Plan": "officer", "cPlan": "company", "v2Sign": "officer", "pcQualified2": "company", "bNeed": "buyer", "bNeeds": "buyer", "v2Buyers": "officer", "v2Need": "officer", "v2Introduce": "officer", "cIntros": "company", "bPack": "buyer", "bCheck": "buyer", "v2Companies": "officer", "v2Agents": "officer", "v2Audit": "officer"}; window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {"Mine": {"toast": "Showing only files assigned to you", "toggle": true}, "Filter": {"toast": "Filters: country, sector, step (prototype)"}, "Remind": {"toast": "Reminder sent to the company", "done": "Reminded"}}};</script>
+<script>window.SBC_ROLES = {"v2Login": "officer", "cRegister": "company", "v2Board": "officer", "v2Company": "officer", "pcHome": "company", "pcChecklist": "company", "v2Check": "officer", "v2Evidence": "officer", "v2Plan": "officer", "cPlan": "company", "v2Sign": "officer", "pcQualified2": "company", "bNeed": "buyer", "bNeeds": "buyer", "v2Buyers": "officer", "v2Need": "officer", "v2Introduce": "officer", "cIntros": "company", "bPack": "buyer", "bCheck": "buyer", "v2Companies": "officer", "v2Agents": "officer", "v2Audit": "officer"}; window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {}};</script>
 <script src="dc-lite.js"></script>
 <script>
 DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
-
 class Component extends DCLogic {
 renderVals() {
   const C = { k: '#0F1115', y: '#E0A030', r: '#D33A2F', o: 'transparent' };
   const segs = (s) => s.split('').map((ch) => ({ bg: C[ch], edge: ch === 'o' ? '#CDD1D8' : C[ch] }));
-  const card = (name, s, note, tone, days, action, href, o) => {
+  const card = (name, s, ask, note, tone, days, action, href, o) => {
     o = o || {};
-    return { name, segs: segs(s), note, tone, days, action, href, cls: o.late ? 'late' : '', dayCls: o.late ? '' : 'muted',
-      btnCls: o.primary ? 'pri' : '' };
+    return { name, segs: segs(s), ask, note, tone, days, action, href, cls: o.late ? 'late' : '', dayCls: o.late ? '' : 'muted', btnCls: o.primary ? 'pri' : '' };
   };
   const steps = [
-    { step: '1', title: 'Check', count: '3', cards: [
-      card('Halvorsen Water', 'kyoyo', '2 open', 'warn', '2d', 'Review', 'v2Check.dc.html', { primary: true }),
-      card('Varun Rail', 'kkkro', 'Sanctions alert', 'err', '5h', 'Review', 'v2Evidence.dc.html'),
-      card('Aquamar Desalación', 'ooooo', 'Unassigned', '', '1d', 'Take', 'v2Check.dc.html') ] },
-    { step: '2', title: 'Second check', count: '2', cards: [
-      card('Northgate Cyber', 'kkkkk', 'Overdue', 'err', '4d', 'Sign', 'v2Sign.dc.html', { late: true, primary: true }),
-      card('Pacifica Survey', 'kkkkk', 'Officer B', '', '1d', 'View', 'v2Sign.dc.html') ] },
-    { step: '3', title: 'Introduce', count: '2', cards: [
-      card('Brunnvik Water', 'kkkkk', 'Strong fit', 'ok', '0d', 'Release', 'v2Introduce.dc.html', { primary: true }),
-      card('Kestrel Membranes', 'kkkkk', 'Good fit', 'info', '1d', 'Review', 'v2Introduce.dc.html') ] }
+    { step: '1', title: 'Check', count: '3', goal: 'Confirm what the AI found', ai: '5 findings drafted', cards: [
+      card('Halvorsen Water', 'kyoyo', '2 findings need a look', 'Ownership open', 'warn', '2d', 'Check', 'v2Check.dc.html', { primary: true }),
+      card('Varun Rail', 'kkkro', 'Possible sanctions name match', 'Screening alert', 'err', '5h', 'Check', 'v2Evidence.dc.html'),
+      card('Aquamar Desalación', 'ooooo', 'No officer yet', 'Unassigned', '', '1d', 'Take', 'v2Check.dc.html') ] },
+    { step: '2', title: 'Second check', count: '2', goal: 'Re-check without seeing key 1', ai: 'same 5 findings', cards: [
+      card('Northgate Cyber', 'kkkkk', 'Key 1 signed 4 days ago', 'Overdue', 'err', '4d', 'Re-check', 'v2Sign.dc.html', { late: true, primary: true }),
+      card('Pacifica Survey', 'kkkkk', 'Officer B is on it', 'In progress', '', '1d', 'View', 'v2Sign.dc.html') ] },
+    { step: '3', title: 'Introduce', count: '2', goal: 'Pick who the buyer sees', ai: 'matches ranked', cards: [
+      card('Brunnvik Water', 'kkkkk', 'Desalination maintenance · 4 of 4 musts', 'Strong fit', 'ok', '0d', 'Approve', 'v2Introduce.dc.html', { primary: true }),
+      card('Kestrel Membranes', 'kkkkk', 'Membrane supply · 3 of 4 musts', 'Good fit', 'info', '1d', 'Review', 'v2Introduce.dc.html') ] }
   ];
   const waiting = [
-    { name: 'Hanbit Pipeline', days: '6d', progress: '9/11', pct: '82%' },
-    { name: 'Corvel Fire Safety', days: '3d', progress: '2/11', pct: '18%' }
+    { name: 'Hanbit Pipeline', days: '6d', progress: '9/11', pct: '82%', what: 'Asked: audited accounts' },
+    { name: 'Corvel Fire Safety', days: '3d', progress: '2/11', pct: '18%', what: 'First upload' }
   ];
   const done = [
     { name: 'Lumen Grid Solar', day: 'Mon', outcome: 'Qualified', tone: 'ok' },
@@ -205,7 +273,6 @@ renderVals() {
   return { steps, waiting, done };
 }
 }
-
 return Component;
 }, document.getElementById('root'));
 </script>
