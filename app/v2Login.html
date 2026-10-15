@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" class="role-officer look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Officer sign in</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 560px;min-height:900px}
+.night{position:relative;overflow:hidden;background:radial-gradient(700px 420px at 30% 60%,rgba(31,79,209,.45),transparent 70%),#0E1220;color:#FFFFFF;padding:40px 48px;display:flex;flex-direction:column;justify-content:space-between}
+.lat{position:absolute;inset:0;opacity:.14;background-image:linear-gradient(115deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%),linear-gradient(65deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%);background-size:160px 120px}
+.brand{position:relative;display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
+.cube{position:relative;align-self:center;width:260px;height:260px;animation:float 6s ease-in-out infinite}
+.cube svg{width:100%;height:100%;filter:drop-shadow(0 30px 50px rgba(31,79,209,.5))}
+@keyframes float{50%{transform:translateY(-10px)}}
+.claim{position:relative;display:flex;flex-direction:column;gap:8px;max-width:440px}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
+.claim h2{margin:0;font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-.02em}
+.claim p{margin:0;color:#C9CDD6;font-size:14px}
+.side{display:flex;flex-direction:column;justify-content:center;padding:48px 64px;gap:22px}
+h1{font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em}
+.muted{color:#8A8F9C}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:#3D4250}
+input{font:14px 'Geist',sans-serif;height:40px;border:1px solid #E1E3E8;border-radius:8px;padding:0 12px;transition:border-color .15s,box-shadow .15s;box-sizing:border-box;width:100%}
+input:focus{outline:none;border-color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+input.filled{border-color:#1F4FD1;background:#F7F9FF}
+.demo{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px dashed #C9D3F2;border-radius:10px;background:#F7F9FF}
+.demo .k{display:flex;flex-direction:column;flex:1;min-width:0}
+.mono{font-family:'Geist Mono',monospace;font-size:12px}
+.btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF;height:42px;width:100%}
+.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18)}
+.spin{width:14px;height:14px;border-radius:999px;border:2px solid rgba(255,255,255,.4);border-top-color:#FFFFFF;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ok{display:flex;align-items:center;gap:12px;padding:14px;border-radius:10px;background:#E9F6EF;color:#0B6B47;animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.side>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}.side>*:nth-child(2){animation-delay:.05s}.side>*:nth-child(3){animation-delay:.1s}.side>*:nth-child(4){animation-delay:.15s}.side>*:nth-child(5){animation-delay:.2s}
+.caret{display:inline-block;width:1px;height:14px;background:#1F4FD1;vertical-align:middle;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.foot{font-size:12px;color:#8A8F9C;display:flex;gap:16px}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="wrap">
+  <section class="night" aria-label="SBC officer console">
+    <div class="lat" aria-hidden="true"></div>
+    <div class="brand"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div class="cube" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 21 7 12 12 3 7z" fill="#3D6AF0" stroke="#0E1220" stroke-width=".2"></path><path d="M3 7 12 12v10L3 17z" fill="#1A1D24" stroke="#3D6AF0" stroke-width=".2"></path><path d="M21 7 12 12v10l9-5z" fill="#1F4FD1" stroke="#0E1220" stroke-width=".2"></path></svg></div>
+    <div class="claim"><span class="eyebrow">SBC officer console</span><h2>Every company checked by two officers before a buyer sees it.</h2><p>Staff access only. Every action you take is recorded in the audit log.</p></div>
+  </section>
+
+  <section class="side" aria-label="Sign in">
+    <div style="display: flex; flex-direction: column; gap: 4px"><h1>Sign in</h1><span class="muted">SBC officer console</span></div>
+
+    <div class="demo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4FD1" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="12" r="4"></circle><path d="M12 12h9M18 12v3"></path></svg>
+      <span class="k"><span style="font-weight: 500">Demo officer account</span><span class="mono muted">officer@sbc-demo.test · Officer-demo-26</span></span>
+      <button class="btn" onClick="{{autofill}}">Autofill</button>
+    </div>
+
+    <div class="field"><label for="em">Work email</label><input id="em" class="{{emCls}}" value="{{email}}" placeholder="name@sbccapital.ae" autocomplete="off"></div>
+    <div class="field"><label for="pw">Password</label><input id="pw" type="password" class="{{pwCls}}" value="{{pass}}" placeholder="Password" autocomplete="off"></div>
+
+    <sc-if value="{{notIn}}" hint-placeholder-val="{{ true }}">
+      <button class="btn pri" onClick="{{signIn}}"><sc-if value="{{busy}}" hint-placeholder-val="{{ false }}"><span class="spin"></span></sc-if>{{btnLabel}}</button>
+      <span class="muted" style="font-size: 12px">{{hint}}</span>
+    </sc-if>
+    <sc-if value="{{signedIn}}" hint-placeholder-val="{{ false }}">
+      <div class="ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B47" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg><span style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Welcome back, Officer A</span><span>Opening your board…</span></span><a class="btn" href="v2Board.dc.html">Open board</a></div>
+    </sc-if>
+    <div class="foot"><span>Single sign-on for SBC staff · [SSO provider]</span><span>Prototype · demo data only</span></div>
+  </section>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { email: '', pass: '', phase: 'idle', tried: false }; this.t = []; }
+componentWillUnmount() { this.t.forEach(clearTimeout); clearInterval(this.iv); }
+renderVals() {
+  const E = 'officer@sbc-demo.test', P = 'Officer-demo-26';
+  const { email, pass, phase, tried } = this.state;
+  const ready = email === E && pass === P;
+  return {
+    email, pass, emCls: email ? 'filled' : '', pwCls: pass ? 'filled' : '',
+    notIn: phase !== 'in', signedIn: phase === 'in', busy: phase === 'busy',
+    btnLabel: phase === 'busy' ? 'Signing in' : 'Sign in',
+    hint: tried && !ready ? 'Use Autofill to fill the demo account.' : 'Demo data only. Nothing you do here is real.',
+    autofill: () => {
+      if (phase !== 'idle') return;
+      clearInterval(this.iv); let i = 0; const total = E.length + P.length;
+      this.setState({ email: '', pass: '', phase: 'typing' });
+      this.iv = setInterval(() => {
+        i++;
+        this.setState({ email: E.slice(0, Math.min(i, E.length)), pass: P.slice(0, Math.max(0, i - E.length)) });
+        if (i >= total) { clearInterval(this.iv); this.setState({ phase: 'idle' }); }
+      }, 28);
+    },
+    signIn: () => {
+      if (!ready) { this.setState({ tried: true }); return; }
+      this.setState({ phase: 'busy' });
+      this.t.push(setTimeout(() => {
+        this.setState({ phase: 'in' });
+        this.t.push(setTimeout(() => { if (window.DCLite && window.DCLite.go) window.DCLite.go('v2Board'); }, 900));
+      }, 900));
+    }
+  };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

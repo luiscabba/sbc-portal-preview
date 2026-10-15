@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" class="role-company look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Evidence checklist, console look</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}a:hover{color:#163B9E}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-width:880px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s,opacity .2s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.btn:disabled{background:#F5F6F8;color:#A3A8B3;border-color:#E6E8EC;cursor:default;box-shadow:none}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF;overflow:hidden}
+.doc{display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0F1F3;position:relative;transition:background .2s}
+.doc:last-child{border-bottom:0}
+.doc:hover{background:#FAFAFB}
+.ico{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;flex:none;transition:background .25s}
+.prog{position:absolute;left:0;bottom:0;height:2px;background:#1F4FD1;animation:up .9s linear both}
+@keyframes up{from{width:0}to{width:100%}}
+@keyframes check{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+.tick{stroke-dasharray:24;animation:check .35s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page>*{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}.page>*:nth-child(2){animation-delay:.05s}.page>*:nth-child(3){animation-delay:.1s}
+.ring circle{transition:stroke-dashoffset .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes shackle{0%{transform:translateY(-5px)}60%{transform:translateY(1px)}100%{transform:translateY(0)}}
+@keyframes sealIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.sent{animation:sealIn .4s cubic-bezier(.2,.8,.2,1) both}
+.shackle{animation:shackle .5s cubic-bezier(.3,1.6,.5,1) .3s both}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column"><span style="font-weight: 500">Halvorsen Water Systems</span><span class="muted" style="font-size: 12px">Company account · Norway</span></div>
+    <nav class="nav" aria-label="Portal"><a href="pcHome.dc.html"><svg viewBox="0 0 24 24"><path d="M4 12h4l3-7 3 14 3-7h3"></path></svg>Status</a><a class="on" href="pcChecklist.dc.html"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"></path></svg>Checklist</a><a href="cPlan.dc.html"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>Action plan<span class="ct">2 left</span></a><a href="#"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"></path></svg>Messages</a><a href="cIntros.dc.html"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM4 7l8 6 8-6"></path></svg>Introductions<span class="ct" style="color: #1F4FD1">1</span></a><a href="pcQualified2.dc.html"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM14 6h4v4h-4z"></path></svg>Your mark</a></nav>
+  </aside>
+
+  <main class="main">
+    <div class="top"><b>Checklist</b></div>
+    <div class="page">
+      <div style="display: flex; align-items: center; gap: 16px">
+        <svg class="ring" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#EBEDF0" stroke-width="4"></circle><circle cx="22" cy="22" r="18" fill="none" stroke="#1F4FD1" stroke-width="4" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="{{ringOffset}}" transform="rotate(-90 22 22)"></circle></svg>
+        <div style="display: flex; flex-direction: column"><h1>Evidence checklist</h1><span class="muted">{{count}} of 4 documents. Upload at your own pace.</span></div>
+        <span style="margin-left: auto"><button class="btn pri" disabled="{{sendDisabled}}" onClick="{{send}}">Send to SBC</button></span>
+      </div>
+
+      <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+        <section class="panel" aria-label="Documents">
+          <sc-for list="{{docs}}" as="d" hint-placeholder-count="4">
+            <div class="doc">
+              <span class="ico" style="background: {{d.icoBg}}">
+                <sc-if value="{{d.done}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><path class="tick" d="M5 12l5 5 9-10"></path></svg></sc-if>
+                <sc-if value="{{d.notDone}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8F9C" stroke-width="1.8"><path d="M6 3h9l4 4v14H6zM14 3v5h5"></path></svg></sc-if>
+              </span>
+              <span style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 500">{{d.name}}</span><span class="muted" style="font-size: 12px">{{d.hint}}</span></span>
+              <span class="badge {{d.tone}}">{{d.state}}</span>
+              <button class="btn" onClick="{{d.upload}}" disabled="{{d.lock}}">{{d.action}}</button>
+              <sc-if value="{{d.uploading}}" hint-placeholder-val="{{ false }}"><span class="prog"></span></sc-if>
+            </div>
+          </sc-for>
+        </section>
+        <span class="muted" style="font-size: 12px">Nothing reaches a buyer while you upload. Files are encrypted and read by AI first, then by two officers.</span>
+      </sc-if>
+
+      <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+        <section class="panel sent" aria-label="Sent">
+          <div style="display: flex; align-items: center; gap: 16px; padding: 24px; background: #F7F9FF; border-bottom: 1px solid #E6E8EC">
+            <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><g class="shackle"><path d="M13 18v-5a7 7 0 0 1 14 0v5" fill="none" stroke="#1F4FD1" stroke-width="3"></path></g><rect x="9" y="18" width="22" height="16" rx="3" fill="#1F4FD1"></rect><circle cx="20" cy="26" r="2.5" fill="#FFFFFF"></circle></svg>
+            <span style="display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 600">Sent to SBC and locked</span><span class="mono muted">Reference SBC-0418 · version 3</span></span>
+          </div>
+          <div style="padding: 16px 24px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-weight: 500">What happens next</span>
+            <span>An officer reviews your file. You'll get an email if anything is missing.</span>
+            <span class="muted">About [10] working days.</span>
+            <span style="display: flex; gap: 8px; margin-top: 8px"><a class="btn pri" href="pcHome.dc.html">Track status</a><button class="btn" onClick="{{reset}}">Replay</button></span>
+          </div>
+        </section>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { st: ['done', 'todo', 'todo', 'todo'], sent: false }; this.t = []; }
+componentWillUnmount() { this.t.forEach(clearTimeout); }
+renderVals() {
+  const base = [['Trade licence', 'Or certificate of incorporation'], ['Ownership chart', 'Every company up to the people who own it'], ['Licences and certifications', 'Sector licences, ISO and similar'], ['Directors and owners', 'Names and dates of birth, for screening']];
+  const st = this.state.st;
+  const set = (i, v) => { const n = this.state.st.slice(); n[i] = v; this.setState({ st: n }); };
+  const docs = base.map(([name, hint], i) => {
+    const s = st[i];
+    return { name, hint, done: s === 'done', notDone: s !== 'done', uploading: s === 'up',
+      state: s === 'done' ? 'Uploaded' : s === 'up' ? 'Uploading' : 'Needed', tone: s === 'done' ? 'ok' : s === 'up' ? 'info' : '',
+      icoBg: s === 'done' ? '#0F7A4E' : '#F1F2F4', action: s === 'done' ? 'Replace' : 'Upload', lock: s === 'up',
+      upload: () => { if (s === 'up') return; set(i, 'up'); this.t.push(setTimeout(() => set(i, 'done'), 900)); } };
+  });
+  const count = st.filter((x) => x === 'done').length;
+  return { docs, count, ringOffset: String(113.1 * (1 - count / 4)), sendDisabled: count < 4 || this.state.sent,
+    send: () => this.setState({ sent: true }), sent: this.state.sent, notSent: !this.state.sent,
+    reset: () => this.setState({ st: ['done', 'todo', 'todo', 'todo'], sent: false }) };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

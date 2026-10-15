@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en" class="role-buyer look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Post a need, console look with delight</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-width:760px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:#3D4250}
+input,textarea{font:13px 'Geist',sans-serif;border:1px solid #E1E3E8;border-radius:6px;padding:7px 10px;transition:border-color .15s,box-shadow .15s;box-sizing:border-box;width:100%}
+input:focus,textarea:focus{outline:none;border-color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:28px;padding:0 10px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;font:500 12px 'Geist',sans-serif;color:#3D4250;cursor:pointer;transition:all .15s}
+.chip.on{background:#0F1115;border-color:#0F1115;color:#FFFFFF}
+.grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+.hero{position:relative;overflow:hidden;border-radius:12px;background:radial-gradient(620px 340px at 72% 50%,rgba(31,79,209,.5),transparent 70%),#0E1220;color:#FFFFFF;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:40px;align-items:center;padding:44px 48px;min-height:340px;box-sizing:border-box}
+.lat{position:absolute;inset:0;opacity:.14;pointer-events:none;background-image:linear-gradient(115deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%),linear-gradient(65deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%);background-size:160px 120px;-webkit-mask-image:linear-gradient(90deg,transparent 20%,#000);mask-image:linear-gradient(90deg,transparent 20%,#000)}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
+.big{font-size:38px;font-weight:600;line-height:1.08;margin:0;letter-spacing:-.025em}
+.lede{font-size:15px;color:#C9CDD6;max-width:440px}
+.hbtn{height:36px;padding:0 14px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#FFFFFF;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background .15s,transform .1s}
+.hbtn:hover{background:rgba(255,255,255,.14)}.hbtn:active{transform:scale(.97)}
+.hbtn.pri{background:#1F4FD1;border-color:#1F4FD1}.hbtn.pri:hover{background:#3D6AF0;box-shadow:0 0 0 3px rgba(126,156,255,.25)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:rgba(126,156,255,.14);color:#C9D5FF;font-size:12px;font-weight:500}
+.seg{display:inline-flex;padding:3px;border-radius:8px;background:rgba(255,255,255,.08);gap:2px}
+.seg button{height:28px;padding:0 12px;border-radius:6px;border:0;background:transparent;color:#C9CDD6;font:500 12px 'Geist',sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover{color:#FFFFFF}.seg button.on{background:#FFFFFF;color:#0E1220}
+.copy>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}.copy>*:nth-child(2){animation-delay:.08s}.copy>*:nth-child(3){animation-delay:.16s}.copy>*:nth-child(4){animation-delay:.24s}.copy>*:nth-child(5){animation-delay:.32s}
+.spark{position:absolute;width:6px;height:6px;border-radius:1px;background:#7E9CFF;bottom:30px;opacity:0;animation:spark 2.4s ease-out forwards}
+@keyframes spark{0%{opacity:0;transform:translateY(0) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-220px) rotate(180deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.blk{border:1px solid #E6E8EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;background:#FFFFFF;transition:border-color .15s,transform .2s,box-shadow .2s;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.blk:hover{border-color:#CDD1D8;transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.06)}
+.lbl{font-size:12px;font-weight:500;color:#5F6573}
+
+.page{max-width:none}
+.form{transform-origin:right center}
+.form.go{animation:send .7s cubic-bezier(.6,0,.4,1) both}
+@keyframes send{0%{transform:none;opacity:1}35%{transform:scale(.97)}100%{transform:translate(40%,-10px) scale(.15);opacity:0}}
+.cube{position:relative;display:grid;place-items:center;height:280px}
+.cube svg{width:200px;height:200px;filter:drop-shadow(0 24px 40px rgba(31,79,209,.55));animation:drop .8s cubic-bezier(.3,1.4,.5,1) .1s both}
+@keyframes drop{from{opacity:0;transform:translateY(-60px) scale(.6) rotate(-20deg)}to{opacity:1;transform:none}}
+.cube .f{animation:lit .5s ease both}.cube .f1{animation-delay:.6s}.cube .f2{animation-delay:.75s}.cube .f3{animation-delay:.9s}
+@keyframes lit{from{fill:#1A2033}}
+.orb{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:999px;border:1px dashed rgba(126,156,255,.3);animation:spin 14s linear infinite, rise .6s ease 1s both}
+.orb i{position:absolute;width:10px;height:10px;border-radius:2px;background:#7E9CFF;box-shadow:0 0 12px #7E9CFF}
+.orb i:nth-child(1){top:-5px;left:145px}.orb i:nth-child(2){bottom:40px;left:12px;background:#FFFFFF}.orb i:nth-child(3){bottom:40px;right:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:999px;border:2px solid rgba(126,156,255,.6);opacity:0;animation:ring 2.2s ease-out 1.1s infinite}
+@keyframes ring{0%{opacity:.7;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+.step{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 16px;border-top:1px solid #F0F1F3;animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+.step:nth-child(2){animation-delay:1.2s}.step:nth-child(3){animation-delay:1.35s}.step:nth-child(4){animation-delay:1.5s}.step:nth-child(5){animation-delay:1.65s}
+.sdot{width:20px;height:20px;border-radius:999px;display:grid;place-items:center;flex:none}
+.live{background:linear-gradient(90deg,#EEF2FD 0,#C9D5FB 50%,#EEF2FD 100%);background-size:200px 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{from{background-position:-200px 0}to{background-position:200px 0}}
+.formwrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start;max-width:1100px}
+.hint{border:1px solid #E6E8EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;background:#FAFAFB}
+.hint .r{display:flex;gap:10px;align-items:flex-start}
+.n{width:20px;height:20px;border-radius:999px;border:1px solid #CDD1D8;display:grid;place-items:center;font:500 11px 'Geist Mono',monospace;flex:none}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}.cube .f{fill:inherit}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column"><span style="font-weight: 500">[Utility name]</span><span class="muted" style="font-size: 12px">Buyer account · Abu Dhabi</span></div>
+    <nav class="nav" aria-label="Portal"><a class="on" href="bNeed.dc.html"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>Post a need</a><a href="bNeeds.dc.html"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>Your needs<span class="ct">2</span></a><a href="bPack.dc.html"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM4 7l8 6 8-6"></path></svg>Introductions<span class="ct" style="color: #1F4FD1">2</span></a><a href="bCheck.dc.html"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM14 6h4v4h-4z"></path></svg>Check a mark</a></nav>
+  </aside>
+  <main class="main">
+    <div class="top"><b>Post a need</b><span class="badge" style="margin-left: auto">Free for buyers · working answer</span></div>
+    <div class="page">
+      <sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1>Post a need</h1><span class="muted">SBC matches it to qualified companies. You only see ones an officer approves.</span></div>
+        <div class="formwrap">
+          <section class="panel form {{goCls}}" aria-label="Need" style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+            <div class="field"><label for="t">What do you need?</label><input id="t" placeholder="Desalination plant maintenance, 3 years"></div>
+            <div class="field"><label for="s">Scope</label><textarea id="s" rows="3" placeholder="Reverse osmosis plant, 2 lots: maintenance and membrane supply."></textarea></div>
+            <div class="field"><label>Where</label>
+              <div class="chips"><sc-for list="{{places}}" as="p" hint-placeholder-count="6"><button class="chip {{p.on}}" onClick="{{p.pick}}">{{p.name}}</button></sc-for></div>
+            </div>
+            <div class="grid2">
+              <div class="field"><label for="l">Lots</label><input id="l" placeholder="2"></div>
+              <div class="field"><label for="b">Budget</label><input id="b" placeholder="[AED range]"></div>
+              <div class="field"><label for="c">Closes</label><input id="c" placeholder="[date]"></div>
+            </div>
+            <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #F0F1F3; padding-top: 14px"><button class="btn">Save draft</button><button class="btn pri" onClick="{{post}}">Post to SBC</button></div>
+          </section>
+          <aside class="hint" aria-label="What happens next">
+            <span class="lbl">What happens next</span>
+            <span class="r"><span class="n">1</span><span>SBC reads your need</span></span>
+            <span class="r"><span class="n">2</span><span>We match qualified companies</span></span>
+            <span class="r"><span class="n">3</span><span>An officer approves each introduction</span></span>
+          </aside>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{posted}}" hint-placeholder-val="{{ false }}">
+        <section class="hero" aria-label="Sent">
+          <div class="lat" aria-hidden="true"></div>
+          <div class="copy" style="position: relative; display: flex; flex-direction: column; gap: 14px">
+            <span class="eyebrow">Sent · OPP-0078</span>
+            <h1 class="big">SBC has your need.</h1>
+            <span class="lede">We are matching it to SBC-Qualified companies now. Each introduction is approved by an officer before you see it.</span>
+            <span style="display: flex; gap: 6px; flex-wrap: wrap"><span class="pill">Desalination plant maintenance</span><sc-for list="{{chosen}}" as="c" hint-placeholder-count="1"><span class="pill">{{c.name}}</span></sc-for></span>
+            <span style="display: flex; gap: 8px; margin-top: 4px"><button class="hbtn pri">View your needs</button><button class="hbtn" onClick="{{edit}}">Replay</button></span>
+          </div>
+          <div class="cube" aria-hidden="true">
+            <span class="ring"></span><span class="ring" style="animation-delay: 2.2s"></span>
+            <span class="orb"><i></i><i></i><i></i></span>
+            <svg viewBox="0 0 24 24"><path class="f f1" d="M12 2 21 7 12 12 3 7z" fill="#3D6AF0" stroke="#0E1220" stroke-width=".2"></path><path class="f f2" d="M3 7 12 12v10L3 17z" fill="#1A1D24" stroke="#3D6AF0" stroke-width=".2"></path><path class="f f3" d="M21 7 12 12v10l9-5z" fill="#1F4FD1" stroke="#0E1220" stroke-width=".2"></path></svg>
+          </div>
+        </section>
+        <section class="panel" aria-label="Progress">
+          <div style="display: flex; align-items: center; height: 40px; padding: 0 16px; font-weight: 500">Progress</div>
+          <div class="step"><span class="sdot" style="background: #0F7A4E"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex: 1">SBC reads your need</span><span class="badge ok">Done</span></div>
+          <div class="step"><span class="sdot live"></span><span style="flex: 1">Matching qualified companies</span><span class="badge info">In progress</span></div>
+          <div class="step"><span class="sdot" style="border: 1.5px solid #CDD1D8; box-sizing: border-box"></span><span style="flex: 1; color: #5F6573">An officer approves each introduction</span><span class="muted">Next</span></div>
+          <div class="step"><span class="sdot" style="border: 1.5px solid #CDD1D8; box-sizing: border-box"></span><span style="flex: 1; color: #5F6573">Introduction packs arrive in Introductions</span><span class="muted">Usually [x] days</span></div>
+        </section>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {"Save draft": {"toast": "Draft saved", "done": "Saved"}, "View your needs": {"go": "bNeeds"}}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { phase: 'form', where: ['United Arab Emirates'] }; this.t = []; }
+componentWillUnmount() { this.t.forEach(clearTimeout); }
+renderVals() {
+  const all = ['United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman'];
+  const w = this.state.where;
+  const places = all.map((name) => ({ name, on: w.includes(name) ? 'on' : '', pick: () => this.setState({ where: w.includes(name) ? w.filter((x) => x !== name) : w.concat(name) }) }));
+  const ph = this.state.phase;
+  return { places, chosen: w.map((name) => ({ name })), editing: ph !== 'sent', posted: ph === 'sent', goCls: ph === 'going' ? 'go' : '',
+    post: () => { this.setState({ phase: 'going' }); this.t.push(setTimeout(() => this.setState({ phase: 'sent' }), 700)); },
+    edit: () => this.setState({ phase: 'form' }) };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

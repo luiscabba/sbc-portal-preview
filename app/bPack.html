@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" class="role-buyer look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Introduction pack, console look with delight</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-width:760px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:#3D4250}
+input,textarea{font:13px 'Geist',sans-serif;border:1px solid #E1E3E8;border-radius:6px;padding:7px 10px;transition:border-color .15s,box-shadow .15s;box-sizing:border-box;width:100%}
+input:focus,textarea:focus{outline:none;border-color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:28px;padding:0 10px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;font:500 12px 'Geist',sans-serif;color:#3D4250;cursor:pointer;transition:all .15s}
+.chip.on{background:#0F1115;border-color:#0F1115;color:#FFFFFF}
+.grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+.hero{position:relative;overflow:hidden;border-radius:12px;background:radial-gradient(620px 340px at 72% 50%,rgba(31,79,209,.5),transparent 70%),#0E1220;color:#FFFFFF;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:40px;align-items:center;padding:44px 48px;min-height:340px;box-sizing:border-box}
+.lat{position:absolute;inset:0;opacity:.14;pointer-events:none;background-image:linear-gradient(115deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%),linear-gradient(65deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%);background-size:160px 120px;-webkit-mask-image:linear-gradient(90deg,transparent 20%,#000);mask-image:linear-gradient(90deg,transparent 20%,#000)}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
+.big{font-size:38px;font-weight:600;line-height:1.08;margin:0;letter-spacing:-.025em}
+.lede{font-size:15px;color:#C9CDD6;max-width:440px}
+.hbtn{height:36px;padding:0 14px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#FFFFFF;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background .15s,transform .1s}
+.hbtn:hover{background:rgba(255,255,255,.14)}.hbtn:active{transform:scale(.97)}
+.hbtn.pri{background:#1F4FD1;border-color:#1F4FD1}.hbtn.pri:hover{background:#3D6AF0;box-shadow:0 0 0 3px rgba(126,156,255,.25)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:rgba(126,156,255,.14);color:#C9D5FF;font-size:12px;font-weight:500}
+.seg{display:inline-flex;padding:3px;border-radius:8px;background:rgba(255,255,255,.08);gap:2px}
+.seg button{height:28px;padding:0 12px;border-radius:6px;border:0;background:transparent;color:#C9CDD6;font:500 12px 'Geist',sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover{color:#FFFFFF}.seg button.on{background:#FFFFFF;color:#0E1220}
+.copy>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}.copy>*:nth-child(2){animation-delay:.08s}.copy>*:nth-child(3){animation-delay:.16s}.copy>*:nth-child(4){animation-delay:.24s}.copy>*:nth-child(5){animation-delay:.32s}
+.spark{position:absolute;width:6px;height:6px;border-radius:1px;background:#7E9CFF;bottom:30px;opacity:0;animation:spark 2.4s ease-out forwards}
+@keyframes spark{0%{opacity:0;transform:translateY(0) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-220px) rotate(180deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.blk{border:1px solid #E6E8EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;background:#FFFFFF;transition:border-color .15s,transform .2s,box-shadow .2s;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.blk:hover{border-color:#CDD1D8;transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.06)}
+.lbl{font-size:12px;font-weight:500;color:#5F6573}
+
+.page{max-width:none}
+.hero{grid-template-columns:minmax(0,1fr) 440px}
+.packs{position:relative;perspective:1400px;display:flex;flex-direction:column}
+.slab{display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);margin-top:6px;color:#E6E8EC;transform-origin:bottom;animation:stack .5s cubic-bezier(.2,.8,.2,1) both;transition:transform .25s,background .25s}
+.slab:hover{transform:translateX(8px);background:rgba(255,255,255,.12)}
+.slab:nth-child(1){animation-delay:.2s}.slab:nth-child(2){animation-delay:.32s}.slab:nth-child(3){animation-delay:.44s}.slab:nth-child(4){animation-delay:.56s}.slab:nth-child(5){animation-delay:.68s}
+@keyframes stack{from{opacity:0;transform:translateY(-36px) rotateX(55deg)}to{opacity:1;transform:none}}
+.tk{width:18px;height:18px;border-radius:999px;background:#2FA36B;display:grid;place-items:center;flex:none;transform:scale(0);animation:pop .3s cubic-bezier(.3,1.6,.5,1) both}
+.slab:nth-child(1) .tk{animation-delay:.6s}.slab:nth-child(2) .tk{animation-delay:.72s}.slab:nth-child(3) .tk{animation-delay:.84s}.slab:nth-child(4) .tk{animation-delay:.96s}.slab:nth-child(5) .tk{animation-delay:1.08s}
+@keyframes pop{to{transform:scale(1)}}
+.seal{display:flex;align-items:center;gap:12px;height:56px;padding:0 14px;border-radius:8px;background:linear-gradient(145deg,#FFFFFF,#EEF2FD);color:#0F1115;margin-top:10px;box-shadow:0 20px 40px rgba(0,0,0,.4);animation:slam .5s cubic-bezier(.3,1.5,.5,1) 1.3s both}
+@keyframes slam{from{opacity:0;transform:translateY(-30px) scale(1.08)}to{opacity:1;transform:none}}
+.sig path{stroke-dasharray:200;stroke-dashoffset:200;animation:sig 1s ease-out 1.7s forwards}
+@keyframes sig{to{stroke-dashoffset:0}}
+.below{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:16px}
+.blk:nth-child(1){animation-delay:1.6s}.blk:nth-child(2){animation-delay:1.7s}.blk:nth-child(3){animation-delay:1.8s}
+.fact{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #F0F1F3}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}.tk{transform:none}.sig path{stroke-dashoffset:0}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column"><span style="font-weight: 500">[Utility name]</span><span class="muted" style="font-size: 12px">Buyer account · Abu Dhabi</span></div>
+    <nav class="nav" aria-label="Portal"><a href="bNeed.dc.html"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>Post a need</a><a href="bNeeds.dc.html"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>Your needs<span class="ct">2</span></a><a class="on" href="bPack.dc.html"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM4 7l8 6 8-6"></path></svg>Introductions<span class="ct" style="color: #1F4FD1">2</span></a><a href="bCheck.dc.html"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM14 6h4v4h-4z"></path></svg>Check a mark</a></nav>
+  </aside>
+  <main class="main">
+    <div class="top"><b>Introductions</b><span class="muted">/ Desalination plant maintenance</span><span class="badge info" style="margin-left: auto">2 new</span></div>
+    <div class="page">
+      <sc-for list="{{view}}" as="v" hint-placeholder-count="1">
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <sc-if value="{{v.show}}" hint-placeholder-val="{{ true }}">
+            <section class="hero" aria-label="Introduction">
+              <div class="lat" aria-hidden="true"></div>
+              <div class="copy" style="position: relative; display: flex; flex-direction: column; gap: 14px">
+                <span class="seg"><sc-for list="{{v.tabs}}" as="t" hint-placeholder-count="2"><button class="{{t.on}}" onClick="{{t.pick}}">{{t.name}}</button></sc-for></span>
+                <span class="eyebrow">Introduced by SBC Capital · {{v.lot}}</span>
+                <h1 class="big">{{v.name}}</h1>
+                <span class="lede">{{v.why}}</span>
+                <span style="display: flex; gap: 8px; margin-top: 4px"><button class="hbtn pri">Request a meeting</button><button class="hbtn">Download pack</button><button class="hbtn">Pass</button></span>
+              </div>
+              <div class="packs" aria-label="Five checks">
+                <sc-for list="{{v.checks}}" as="c" hint-placeholder-count="5"><div class="slab"><span class="tk"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex: 1; font-weight: 500">{{c.name}}</span><span class="mono" style="font-size: 11px; color: #A9AFBA">{{c.date}}</span></div></sc-for>
+                <div class="seal"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1" fill="none" stroke="#0F1115" stroke-width="2"></rect><rect x="13" y="5" width="6" height="6" fill="#1F4FD1"></rect></svg><span style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Approved by an SBC officer</span><span class="mono muted" style="font-size: 11px">Today 10:42 GST</span></span><svg class="sig" width="96" height="28" viewBox="0 0 120 32" aria-hidden="true"><path d="M4 22c10-14 18-14 20 0s12-10 18-4 10 8 18-6 16 2 22 6 14-4 30-8" fill="none" stroke="#1F4FD1" stroke-width="2.4" stroke-linecap="round"></path></svg></div>
+              </div>
+            </section>
+          </sc-if>
+          <div class="below">
+            <section class="blk" aria-label="Company"><span class="lbl">Company</span>
+              <span class="fact"><span class="muted">Country</span><span>{{v.country}}</span></span>
+              <span class="fact"><span class="muted">SBC-Qualified to</span><span>{{v.valid}}</span></span>
+              <span class="fact"><span class="muted">Gulf contracts</span><span>{{v.gulf}}</span></span>
+              <span class="fact" style="border: 0"><span class="muted">Mark</span><span class="mono">{{v.mark}}</span></span>
+            </section>
+            <section class="blk" aria-label="Meeting"><span class="lbl">If you request a meeting</span><span>SBC arranges it within [x] working days. Both sides get the same pack.</span></section>
+            <section class="blk" aria-label="Note"><span class="lbl">Keep in mind</span><span>An introduction is not a promised contract. Your procurement rules apply.</span></section>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {"Request a meeting": {"toast": "Meeting requested. SBC proposes times within [x] working days", "done": "Meeting requested"}, "Download pack": {"toast": "Pack downloaded as PDF (prototype)"}, "Pass": {"toast": "Passed. SBC lets the company know", "done": "Passed"}}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { sel: 0, show: true }; }
+componentWillUnmount() { clearTimeout(this.t); }
+renderVals() {
+  const data = [
+    { name: 'Brunnvik Water AS', short: 'Brunnvik', country: 'Norway', valid: 'Aug 2027', gulf: '3 since 2021', mark: 'SBC-Q-[ID]', lot: 'lots 1 and 2', why: 'Reverse osmosis maintenance is its core service. Three Gulf desalination contracts since 2021.' },
+    { name: 'Kestrel Membranes Ltd', short: 'Kestrel', country: 'United Kingdom', valid: 'May 2027', gulf: '1 since 2023', mark: 'SBC-Q-[ID]', lot: 'lot 2', why: 'Membrane supply and servicing. Proposed for lot 2.' }
+  ];
+  const checks = [['Identity', '2 Aug'], ['Ownership to the final owner', '2 Aug'], ['Licences and certifications', 'Valid'], ['Screening', '1 Oct'], ['Gulf readiness', '2 Aug']].map(([name, date]) => ({ name, date }));
+  const sel = this.state.sel;
+  const tabs = data.map((d, i) => ({ name: d.short, on: i === sel ? 'on' : '', pick: () => { if (i === sel) return; this.setState({ sel: i, show: false }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ show: true }), 40); } }));
+  return { view: [{ ...data[sel], tabs, checks, show: this.state.show }] };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

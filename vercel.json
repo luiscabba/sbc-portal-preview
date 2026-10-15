@@ -1,0 +1,9 @@
+{
+ "cleanUrls": true,
+ "headers": [{ "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }],
+ "redirects": [
+  { "source": "/officer", "destination": "/app/v2Login", "permanent": false },
+  { "source": "/company", "destination": "/app/cRegister", "permanent": false },
+  { "source": "/buyer", "destination": "/app/bNeed", "permanent": false }
+ ]
+}

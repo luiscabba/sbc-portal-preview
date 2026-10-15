@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" class="role-company look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Company status, console look</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}a:hover{color:#163B9E}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.warn{background:#FDF3DF;color:#8A5600}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.ph{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-bottom:1px solid #E6E8EC;font-weight:500;box-sizing:border-box}
+.rail{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:28px 24px 20px}
+.track{position:absolute;left:calc(24px + 10%);right:calc(24px + 10%);top:39px;height:2px;background:#E6E8EC}
+.fill{position:absolute;left:0;top:0;height:2px;background:#1F4FD1;width:50%;transform-origin:left;animation:fill 1.4s cubic-bezier(.2,.8,.2,1) .3s both}
+.stop{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.dotx{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:#FFFFFF;border:2px solid #E1E3E8;z-index:1;box-sizing:border-box}
+.done .dotx{background:#1F4FD1;border-color:#1F4FD1;animation:popin .3s cubic-bezier(.2,.8,.2,1) both}
+.done:nth-child(3) .dotx{animation-delay:.6s}
+.now .dotx{border-color:#1F4FD1;animation:ring 1.8s ease-out 1.6s infinite}
+.now .dotx::after{content:"";width:8px;height:8px;border-radius:999px;background:#1F4FD1}
+.token{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'Geist Mono',monospace;font-size:10px;background:#0F1115;color:#FFFFFF;border-radius:4px;padding:2px 6px;animation:drop .5s cubic-bezier(.2,.8,.2,1) 1.5s both}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes popin{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(31,79,209,.35)}100%{box-shadow:0 0 0 10px rgba(31,79,209,0)}}
+@keyframes drop{from{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page>*{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}.page>*:nth-child(2){animation-delay:.05s}.page>*:nth-child(3){animation-delay:.1s}
+.msg{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid #F0F1F3;transition:background .15s}.msg:hover{background:#FAFAFB}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column"><span style="font-weight: 500">Halvorsen Water Systems</span><span class="muted" style="font-size: 12px">Company account · Norway</span></div>
+    <nav class="nav" aria-label="Portal"><a class="on" href="pcHome.dc.html"><svg viewBox="0 0 24 24"><path d="M4 12h4l3-7 3 14 3-7h3"></path></svg>Status</a><a href="pcChecklist.dc.html"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"></path></svg>Checklist</a><a href="cPlan.dc.html"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>Action plan<span class="ct">2 left</span></a><a href="#"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"></path></svg>Messages</a><a href="cIntros.dc.html"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM4 7l8 6 8-6"></path></svg>Introductions<span class="ct" style="color: #1F4FD1">1</span></a><a href="pcQualified2.dc.html"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM14 6h4v4h-4z"></path></svg>Your mark</a></nav>
+  </aside>
+
+  <main class="main">
+    <div class="top"><b>Status</b><span class="mono muted" style="margin-left: auto">SBC-0418</span></div>
+    <div class="page">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <h1>Your review</h1>
+        <span class="badge info">With SBC</span>
+        <span class="muted">Sent 14 Oct · version 3</span>
+      </div>
+
+      <section class="panel" aria-label="Progress">
+        <div class="rail">
+          <div class="track"><div class="fill"></div></div>
+          <div class="stop done"><span class="dotx"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-weight: 500">Registered</span><span class="mono muted" style="font-size: 11px">2 Oct</span></div>
+          <div class="stop done"><span class="dotx"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-weight: 500">Evidence sent</span><span class="mono muted" style="font-size: 11px">14 Oct</span></div>
+          <div class="stop now"><span class="token">You are here</span><span class="dotx"></span><span style="font-weight: 500">Officer 1</span><span class="muted" style="font-size: 11px">Reviewing</span></div>
+          <div class="stop"><span class="dotx"></span><span style="font-weight: 500; color: #5F6573">Officer 2</span><span class="muted" style="font-size: 11px">Next</span></div>
+          <div class="stop"><span class="dotx"></span><span style="font-weight: 500; color: #5F6573">SBC-Qualified</span><span class="muted" style="font-size: 11px">About [10] working days</span></div>
+        </div>
+      </section>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start">
+        <section class="panel" aria-label="Messages">
+          <div class="ph">Needs you<span class="badge info" style="margin-left: 4px">1</span></div>
+          <div class="msg">
+            <span style="width: 28px; height: 28px; border-radius: 999px; background: #EEF2FD; color: #1F4FD1; display: grid; place-items: center; font-size: 11px; font-weight: 600; flex: none">SBC</span>
+            <span style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 500">Register extract for Nordkap Invest Ltd, Cyprus</span><span class="muted" style="font-size: 12px">Asked by your officer · today</span></span>
+            <a class="btn pri" href="pcChecklist.dc.html">Upload</a>
+          </div>
+          <div class="msg" style="border-bottom: 0">
+            <span style="width: 28px; height: 28px; border-radius: 999px; background: #F1F2F4; color: #5F6573; display: grid; place-items: center; font-size: 11px; font-weight: 600; flex: none">SBC</span>
+            <span style="display: flex; flex-direction: column; flex: 1"><span>Your evidence was received and locked as version 3.</span><span class="muted" style="font-size: 12px">14 Oct</span></span>
+          </div>
+        </section>
+        <section class="panel" aria-label="Next">
+          <div class="ph">What happens next</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px">
+            <span>Two officers review your file separately.</span>
+            <span>Nothing reaches a buyer until both sign.</span>
+            <span class="muted" style="font-size: 12px">Questions: [contact email]</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

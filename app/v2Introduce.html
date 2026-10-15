@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en" class="role-officer look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Introduce to a buyer</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}a:hover{color:#163B9E}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.me{margin-top:auto;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px;color:#3D4250}
+.av{width:22px;height:22px;border-radius:999px;background:#0F1115;color:#FFFFFF;display:grid;place-items:center;font-size:10px;font-weight:600;flex:none}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top a{color:#5F6573;text-decoration:none}.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap}
+.btn:hover{background:#F7F8FA;color:#0F1115}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.warn{background:#FDF3DF;color:#8A5600}.err{background:#FCEBEA;color:#A8231B}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.ph{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-bottom:1px solid #E6E8EC;font-weight:500;box-sizing:border-box}
+.pick{width:100%;display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border:0;border-bottom:1px solid #F0F1F3;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.pick.on{background:#EEF2FD}
+.frow{display:grid;grid-template-columns:120px 96px 64px minmax(0,1fr);gap:12px;align-items:center;min-height:40px;padding:0 12px;border-bottom:1px solid #F0F1F3}
+.meter{display:flex;gap:2px}.meter span{flex:1;height:6px;border-radius:1px}
+
+/* motion */
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translateY(-4px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,79,209,.35)}50%{box-shadow:0 0 0 4px rgba(31,79,209,0)}}
+.page>*{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}
+.page>*:nth-child(2){animation-delay:.05s}.page>*:nth-child(3){animation-delay:.1s}.page>*:nth-child(4){animation-delay:.15s}.page>*:nth-child(5){animation-delay:.2s}
+.col .card,.tbl .tr:not(.th),.panel .row,.panel .tr,.claim{animation:rise .38s cubic-bezier(.2,.8,.2,1) both}
+.col .card:nth-of-type(2),.tbl .tr:nth-child(3),.panel .tr:nth-child(3){animation-delay:.06s}
+.col .card:nth-of-type(3),.tbl .tr:nth-child(4),.panel .tr:nth-child(4){animation-delay:.12s}
+.tbl .tr:nth-child(5),.panel .tr:nth-child(5){animation-delay:.18s}.tbl .tr:nth-child(6),.panel .tr:nth-child(6){animation-delay:.24s}
+.tbl .tr:nth-child(7){animation-delay:.3s}.tbl .tr:nth-child(8){animation-delay:.36s}.tbl .tr:nth-child(9){animation-delay:.42s}
+.card{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s,border-color .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(15,17,21,.08);border-color:#D5D8DF}
+.btn{transition:background .15s,border-color .15s,box-shadow .15s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18)}
+.card .btn.pri{animation:pulse 2.4s ease-in-out 1s 2}
+.nav a{transition:background .15s,color .15s}
+.nav a svg{transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+.nav a:hover svg{transform:translateX(2px)}
+.tr,.row,.pick,.claim,.opt{transition:background .15s,border-color .15s}
+a.tr:hover,.pick:hover,.claim:hover{background:#F7F8FA}
+.pick.on,.claim.on{background:#EEF2FD}
+.opt:hover{border-color:#B9C3E0}
+.tabs button{transition:color .15s,border-color .2s}
+.tabs button:hover{color:#0F1115}
+.seg2 button{transition:background .15s,color .15s}
+.badge{transition:background .2s,color .2s}
+[role=dialog]{animation:pop .24s cubic-bezier(.2,.8,.2,1) both;transform-origin:top right}
+.seg span,.meter span,.bar span{transform-origin:left;animation:grow .6s cubic-bezier(.2,.8,.2,1) .2s both}
+.seg span:nth-child(2),.meter span:nth-child(2){animation-delay:.26s}.seg span:nth-child(3),.meter span:nth-child(3){animation-delay:.32s}.seg span:nth-child(4),.meter span:nth-child(4){animation-delay:.38s}.seg span:nth-child(5){animation-delay:.44s}
+.node{transition:transform .18s,box-shadow .18s}.node:hover{transform:translateX(2px);box-shadow:0 2px 8px rgba(15,17,21,.06)}
+.stat{transition:border-color .15s,transform .18s}.stat:hover{border-color:#D5D8DF;transform:translateY(-1px)}
+.panel{transition:box-shadow .2s}
+:focus-visible{outline:2px solid #1F4FD1;outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <nav class="nav" aria-label="Console">
+      <a class="on" href="v2Board.dc.html"><svg viewBox="0 0 24 24"><path d="M4 4h6v7H4zM14 4h6v4h-6zM14 12h6v8h-6zM4 15h6v5H4z"></path></svg>Board<span class="ct">7</span></a>
+      <a href="v2Companies.dc.html"><svg viewBox="0 0 24 24"><path d="M4 21V6l8-3 8 3v15M9 21v-4h6v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"></path></svg>Companies</a>
+      <a href="v2Buyers.dc.html"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5zM9 8V5h6v3"></path></svg>Buyers<span class="ct">3</span></a>
+      <a href="v2Agents.dc.html"><svg viewBox="0 0 24 24"><path d="M16 20v-1a4 4 0 0 0-8 0v1M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>Agent panel</a>
+      <a href="v2Audit.dc.html"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"></path></svg>Audit log</a>
+    </nav>
+    <div class="me"><span class="av">A</span>Officer A</div>
+  </aside>
+
+  <main class="main">
+    <div class="top"><a href="v2Board.dc.html">Board</a><span>/</span><a href="v2Need.dc.html">Desalination maintenance</a><span>/</span><b>Introduce</b></div>
+    <div class="page">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <h1>Desalination maintenance</h1>
+        <span class="badge info">Step 3 · Introduce</span>
+        <span class="muted">Abu Dhabi · [utility name] · 2 lots</span>
+        <span class="mono muted" style="margin-left: auto">Closes [date]</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr) 300px; gap: 16px; align-items: start">
+        <section class="panel" aria-label="Matches">
+          <div class="ph">Matches<span class="ct">3</span></div>
+          <div class="mono muted" style="display: flex; gap: 6px; align-items: center; padding: 8px 12px; font-size: 11px; border-bottom: 1px solid #E6E8EC; background: #FAFAFB">41 qualified<span>→</span>6 pass<span>→</span>3 shown</div>
+          <sc-for list="{{matches}}" as="m" hint-placeholder-count="3">
+            <button class="pick {{m.on}}" onClick="{{m.pick}}">
+              <span style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 500">{{m.name}}</span><span class="muted" style="font-size: 12px">{{m.country}}</span></span>
+              <span class="badge {{m.tone}}">{{m.fit}}</span>
+            </button>
+          </sc-for>
+        </section>
+
+        <section class="panel" aria-label="Fit">
+          <div class="ph">Must-haves<span class="badge ok" style="margin-left: auto">4 of 4</span></div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid #E6E8EC">
+            <sc-for list="{{must}}" as="x" hint-placeholder-count="4">
+              <span style="display: flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border-bottom: 1px solid #F0F1F3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0F7A4E" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>{{x.t}}</span>
+            </sc-for>
+          </div>
+          <div class="ph" style="border-top: 0">Fit</div>
+          <sc-for list="{{cur.fit}}" as="f" hint-placeholder-count="4">
+            <div class="frow">
+              <span style="font-weight: 500">{{f.name}}</span>
+              <span class="meter"><sc-for list="{{f.bars}}" as="b" hint-placeholder-count="4"><span style="background: {{b.bg}}"></span></sc-for></span>
+              <span class="badge {{f.tone}}">{{f.word}}</span>
+              <a href="v2Evidence.dc.html" class="mono" style="font-size: 11px; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{f.src}}</a>
+            </div>
+          </sc-for>
+        </section>
+
+        <section class="panel" aria-label="Buyer pack">
+          <div class="ph">Buyer sees</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px">
+            <div style="border: 1px solid #E6E8EC; border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: #FAFAFB">
+              <span style="display: flex; align-items: center; justify-content: space-between"><span style="font-weight: 600">{{cur.name}}</span><span style="width: 14px; height: 14px; border: 1.5px solid #0F1115; border-radius: 2px; position: relative; display: inline-block"><span style="position: absolute; top: 2px; right: 2px; width: 4px; height: 4px; background: #1F4FD1"></span></span></span>
+              <span class="muted" style="font-size: 12px">SBC-Qualified · 5 checks · 2 officers</span>
+              <span>{{cur.why}}</span>
+            </div>
+            <label for="msg" class="muted" style="font-size: 12px">Note to buyer</label>
+            <textarea id="msg" rows="2" style="font: 13px 'Geist', sans-serif; border: 1px solid #E1E3E8; border-radius: 6px; padding: 8px 10px; resize: vertical"></textarea>
+            <button class="btn pri" style="height: 34px">Release</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"><button class="btn">Hold</button><button class="btn">Not a fit</button></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {"Release": {"toast": "Introduction released to both sides", "go": "cIntros"}, "Hold": {"toast": "Introduction on hold", "done": "On hold"}, "Not a fit": {"toast": "Marked not a fit. The buyer will not see it", "done": "Not a fit"}}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { sel: 0 }; }
+renderVals() {
+  const lvl = { Strong: 4, Good: 3, Partial: 2, Check: 2 };
+  const tone = { Strong: 'ok', Good: 'info', Partial: 'warn', Check: 'warn' };
+  const bar = { Strong: '#0F7A4E', Good: '#1F4FD1', Partial: '#E0A030', Check: '#E0A030' };
+  const data = [
+    { name: 'Brunnvik Water AS', country: 'Norway', fit: 'Strong', why: 'Core reverse osmosis maintenance. Three Gulf desalination contracts.',
+      s: [['Capability', 'Strong', 'capability.pdf p.3'], ['Scale', 'Strong', 'projects.xlsx row 6'], ['Track record', 'Strong', 'references.pdf'], ['Local content', 'Check', 'ICV certificate']] },
+    { name: 'Kestrel Membranes', country: 'United Kingdom', fit: 'Good', why: 'Membrane supply and servicing. Lot 2 only.',
+      s: [['Capability', 'Good', 'capability.pdf p.2'], ['Scale', 'Good', 'accounts 2025'], ['Track record', 'Good', 'references.pdf'], ['Local content', 'Good', 'ICV certificate']] },
+    { name: 'Tagus Hydro SA', country: 'Portugal', fit: 'Partial', why: 'Strong in Europe. No Gulf contracts yet.',
+      s: [['Capability', 'Strong', 'capability.pdf p.1'], ['Scale', 'Good', 'accounts 2025'], ['Track record', 'Partial', 'references.pdf'], ['Local content', 'Partial', 'readiness plan']] }
+  ];
+  const sel = this.state.sel;
+  const matches = data.map((m, i) => ({ name: m.name, country: m.country, fit: m.fit, tone: tone[m.fit], on: i === sel ? 'on' : '', pick: () => this.setState({ sel: i }) }));
+  const m = data[sel];
+  const cur = { name: m.name, why: m.why, fit: m.s.map(([name, word, src]) => ({ name, word, src, tone: tone[word],
+    bars: [0, 1, 2, 3].map((k) => ({ bg: k < lvl[word] ? bar[word] : '#EBEDF0' })) })) };
+  const must = [{ t: 'Licensed in UAE' }, { t: 'Turnover above minimum' }, { t: 'SBC-Qualified' }, { t: 'Screening clear' }];
+  return { matches, cur, must };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

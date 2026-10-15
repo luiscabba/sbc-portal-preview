@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" class="role-buyer look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Your needs, console look with delight</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-width:760px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:#3D4250}
+input,textarea{font:13px 'Geist',sans-serif;border:1px solid #E1E3E8;border-radius:6px;padding:7px 10px;transition:border-color .15s,box-shadow .15s;box-sizing:border-box;width:100%}
+input:focus,textarea:focus{outline:none;border-color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:28px;padding:0 10px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;font:500 12px 'Geist',sans-serif;color:#3D4250;cursor:pointer;transition:all .15s}
+.chip.on{background:#0F1115;border-color:#0F1115;color:#FFFFFF}
+.grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+.hero{position:relative;overflow:hidden;border-radius:12px;background:radial-gradient(620px 340px at 72% 50%,rgba(31,79,209,.5),transparent 70%),#0E1220;color:#FFFFFF;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:40px;align-items:center;padding:44px 48px;min-height:340px;box-sizing:border-box}
+.lat{position:absolute;inset:0;opacity:.14;pointer-events:none;background-image:linear-gradient(115deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%),linear-gradient(65deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%);background-size:160px 120px;-webkit-mask-image:linear-gradient(90deg,transparent 20%,#000);mask-image:linear-gradient(90deg,transparent 20%,#000)}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
+.big{font-size:38px;font-weight:600;line-height:1.08;margin:0;letter-spacing:-.025em}
+.lede{font-size:15px;color:#C9CDD6;max-width:440px}
+.hbtn{height:36px;padding:0 14px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#FFFFFF;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background .15s,transform .1s}
+.hbtn:hover{background:rgba(255,255,255,.14)}.hbtn:active{transform:scale(.97)}
+.hbtn.pri{background:#1F4FD1;border-color:#1F4FD1}.hbtn.pri:hover{background:#3D6AF0;box-shadow:0 0 0 3px rgba(126,156,255,.25)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:rgba(126,156,255,.14);color:#C9D5FF;font-size:12px;font-weight:500}
+.seg{display:inline-flex;padding:3px;border-radius:8px;background:rgba(255,255,255,.08);gap:2px}
+.seg button{height:28px;padding:0 12px;border-radius:6px;border:0;background:transparent;color:#C9CDD6;font:500 12px 'Geist',sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover{color:#FFFFFF}.seg button.on{background:#FFFFFF;color:#0E1220}
+.copy>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}.copy>*:nth-child(2){animation-delay:.08s}.copy>*:nth-child(3){animation-delay:.16s}.copy>*:nth-child(4){animation-delay:.24s}.copy>*:nth-child(5){animation-delay:.32s}
+.spark{position:absolute;width:6px;height:6px;border-radius:1px;background:#7E9CFF;bottom:30px;opacity:0;animation:spark 2.4s ease-out forwards}
+@keyframes spark{0%{opacity:0;transform:translateY(0) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-220px) rotate(180deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.blk{border:1px solid #E6E8EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;background:#FFFFFF;transition:border-color .15s,transform .2s,box-shadow .2s;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.blk:hover{border-color:#CDD1D8;transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.06)}
+.lbl{font-size:12px;font-weight:500;color:#5F6573}
+
+.page{max-width:none}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 150px 110px 90px;gap:12px;align-items:center;min-height:56px;padding:0 16px;border-top:1px solid #F0F1F3;cursor:pointer;background:#FFFFFF;border-left:2px solid transparent;transition:background .15s,border-color .15s;animation:rise .4s cubic-bezier(.2,.8,.2,1) both;text-align:left;width:100%;font:inherit;color:inherit;border-right:0;border-bottom:0}
+.row:hover{background:#FAFAFB}
+.row.on{background:#F5F7FE;border-left-color:#1F4FD1}
+.row:nth-child(2){animation-delay:.06s}.row:nth-child(3){animation-delay:.12s}.row:nth-child(4){animation-delay:.18s}
+.hd{display:grid;grid-template-columns:minmax(0,1fr) 150px 110px 90px;gap:12px;height:36px;align-items:center;padding:0 16px 0 18px;font-size:12px;color:#8A8F9C}
+.pipe{display:flex;gap:4px;align-items:center}
+.pipe i{width:26px;height:6px;border-radius:999px;background:#E6E8EC;position:relative;overflow:hidden}
+.pipe i.f{background:#1F4FD1}
+.pipe i.c{background:#C9D5FB}
+.pipe i.c::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#1F4FD1,transparent);animation:sweep 1.3s linear infinite}
+.pipe.closed i.f{background:#8A8F9C}
+@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.newdot{width:8px;height:8px;border-radius:999px;background:#1F4FD1;display:inline-block;margin-left:6px;box-shadow:0 0 0 0 rgba(31,79,209,.5);animation:ping 1.6s ease-out infinite}
+@keyframes ping{to{box-shadow:0 0 0 8px rgba(31,79,209,0)}}
+.det{position:sticky;top:16px;border:1px solid #E6E8EC;border-radius:10px;overflow:hidden;background:#FFFFFF}
+.dh{background:radial-gradient(300px 160px at 85% 30%,rgba(31,79,209,.5),transparent 70%),#0E1220;color:#FFFFFF;padding:20px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
+.count{font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1;animation:countin .6s cubic-bezier(.3,1.4,.5,1) .2s both}
+@keyframes countin{from{opacity:0;transform:translateY(16px) scale(.8)}to{opacity:1;transform:none}}
+.tl{padding:8px 20px 16px;display:flex;flex-direction:column}
+.ts{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:12px;align-items:start;padding:10px 0;position:relative;animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+.ts:nth-child(1){animation-delay:.25s}.ts:nth-child(2){animation-delay:.4s}.ts:nth-child(3){animation-delay:.55s}.ts:nth-child(4){animation-delay:.7s}.ts:nth-child(5){animation-delay:.85s}
+.ts::before{content:"";position:absolute;left:9px;top:30px;bottom:-10px;width:2px;background:#E6E8EC}
+.ts:last-child::before{display:none}
+.td{width:20px;height:20px;border-radius:999px;display:grid;place-items:center;box-sizing:border-box;position:relative;z-index:1}
+.td.f{background:#0F7A4E}.td.c{background:#EEF2FD;border:2px solid #1F4FD1}.td.c::after{content:"";width:6px;height:6px;border-radius:999px;background:#1F4FD1;animation:blinkq 1.2s ease-in-out infinite}.td.n{border:1.5px solid #CDD1D8;background:#FFFFFF}
+@keyframes blinkq{50%{opacity:.25}}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <aside class="side">
+    <div class="ws"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column"><span style="font-weight: 500">[Utility name]</span><span class="muted" style="font-size: 12px">Buyer account · Abu Dhabi</span></div>
+    <nav class="nav" aria-label="Portal"><a href="bNeed.dc.html"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>Post a need</a><a class="on" href="bNeeds.dc.html"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>Your needs<span class="ct">2</span></a><a href="bPack.dc.html"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM4 7l8 6 8-6"></path></svg>Introductions<span class="ct" style="color: #1F4FD1">2</span></a><a href="bCheck.dc.html"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM14 6h4v4h-4z"></path></svg>Check a mark</a></nav>
+  </aside>
+  <main class="main">
+    <div class="top"><b>Your needs</b><span style="margin-left: auto"><a class="btn pri" href="bNeed.dc.html">Post a need</a></span></div>
+    <div class="page">
+      <div class="split">
+        <section class="panel" aria-label="Needs" style="overflow: hidden">
+          <div class="hd"><span>Need</span><span>Progress</span><span>Introductions</span><span>Posted</span></div>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+            <button class="row {{r.on}}" onClick="{{r.pick}}">
+              <span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 500">{{r.name}}<sc-if value="{{r.fresh}}" hint-placeholder-val="{{ false }}"><span class="newdot"></span></sc-if></span><span class="mono muted" style="font-size: 11px">{{r.id}} · {{r.stage}}</span></span>
+              <span class="pipe {{r.pcls}}"><sc-for list="{{r.bars}}" as="b" hint-placeholder-count="4"><i class="{{b.c}}"></i></sc-for></span>
+              <span>{{r.intros}}</span>
+              <span class="mono muted" style="font-size: 12px">{{r.posted}}</span>
+            </button>
+          </sc-for>
+        </section>
+        <sc-for list="{{det}}" as="d" hint-placeholder-count="1">
+          <aside class="det" aria-label="Detail">
+            <div class="dh"><span class="eyebrow">{{d.id}}</span><span style="font-weight: 600; font-size: 15px">{{d.name}}</span><span style="display: flex; align-items: baseline; gap: 8px; margin-top: 8px"><span class="count">{{d.n}}</span><span style="color: #C9CDD6">{{d.nLabel}}</span></span></div>
+            <div class="tl"><sc-for list="{{d.steps}}" as="s" hint-placeholder-count="5"><div class="ts"><span class="td {{s.c}}"><sc-if value="{{s.ok}}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></sc-if></span><span style="display: flex; flex-direction: column"><span style="font-weight: 500">{{s.name}}</span><span class="muted" style="font-size: 12px">{{s.note}}</span></span><span class="mono muted" style="font-size: 11px">{{s.date}}</span></div></sc-for></div>
+            <div style="padding: 0 20px 20px; display: flex; gap: 8px"><a class="btn pri" href="bPack.dc.html">{{d.cta}}</a><button class="btn">Edit need</button></div>
+          </aside>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {"Edit need": {"go": "bNeed"}}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { sel: 0, show: true }; }
+componentWillUnmount() { clearTimeout(this.t); }
+renderVals() {
+  const names = ['Posted', 'Matching', 'Officer approval', 'Introductions', 'Meeting'];
+  const data = [
+    { id: 'OPP-0078', name: 'Desalination plant maintenance', at: 3, intros: '2 new', n: '2', nLabel: 'introductions ready', posted: '14 Oct', fresh: true, cta: 'Open introductions',
+      dates: ['14 Oct', '14 Oct', '15 Oct', 'Today', ''], notes: ['You posted it', '6 companies considered', '2 approved by an officer', 'Waiting for your choice', 'When you request one'] },
+    { id: 'OPP-0071', name: 'Solar maintenance partner', at: 4, intros: '3 · 1 meeting', n: '1', nLabel: 'meeting set', posted: '28 Sep', fresh: false, cta: 'Open introductions',
+      dates: ['28 Sep', '29 Sep', '2 Oct', '3 Oct', '21 Oct'], notes: ['You posted it', '9 companies considered', '3 approved', 'You chose Solvik Energi', 'Meeting on 21 Oct'] },
+    { id: 'OPP-0080', name: 'Pipeline inspection drones', at: 1, intros: 'None yet', n: '0', nLabel: 'still matching', posted: 'Today', fresh: false, cta: 'View need',
+      dates: ['Today', 'Now', '', '', ''], notes: ['You posted it', 'SBC is matching', 'Next', 'Usually [x] days', 'When you request one'] },
+    { id: 'OPP-0064', name: 'Water network pressure sensors', at: 5, intros: '2 · closed', n: '1', nLabel: 'contract awarded', posted: 'Aug', fresh: false, cta: 'View history', closed: true,
+      dates: ['4 Aug', '5 Aug', '8 Aug', '9 Aug', '20 Aug'], notes: ['You posted it', '5 considered', '2 approved', '2 introduced', 'Closed by you'] }
+  ];
+  const sel = this.state.sel;
+  const pickRow = (i) => () => { if (i === sel) return; this.setState({ sel: i, show: false }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ show: true }), 30); };
+  const rows = data.map((d, i) => ({ ...d, on: i === sel ? 'on' : '', pick: pickRow(i), stage: d.closed ? 'Closed' : names[Math.min(d.at, 4)], pcls: d.closed ? 'closed' : '',
+    bars: [0, 1, 2, 3].map((k) => ({ c: k < d.at ? 'f' : (k === d.at ? 'c' : '') })) }));
+  const d = data[sel];
+  const steps = names.map((name, k) => ({ name, note: d.notes[k], date: d.dates[k], c: k < d.at ? 'f' : (k === d.at ? 'c' : 'n'), ok: k < d.at }));
+  return { rows, det: this.state.show ? [{ ...d, steps }] : [] };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

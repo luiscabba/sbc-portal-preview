@@ -1,0 +1,41 @@
+/* Role looks. html gets role-officer | role-company | role-buyer from the build, and look-a | look-b | look-c from the flow viewer. */
+html.role-officer{--r:#1F4FD1;--r-ink:#0E1220;--r-tint:#EEF2FD;--r-soft:#E3EAFD;--r-name:"SBC officer console"}
+html.role-company{--r:#1F4FD1;--r-ink:#163B9E;--r-tint:#F3F6FE;--r-soft:#E3EAFD;--r-name:"Company portal"}
+html.role-buyer{--r:#0E7C86;--r-ink:#0A5C63;--r-tint:#EFF7F7;--r-soft:#DAEEEF;--r-name:"Buyer portal"}
+
+/* A. Tinted sidebars: officer works in a dark staff sidebar, the two portals get a light tint of their colour */
+html.look-a .side{background:var(--r-tint);border-right-color:var(--r-soft);transition:background .3s}
+html.look-a .side .nav a.on{background:var(--r-soft);color:var(--r-ink)}
+html.look-a .side .nav a:hover{background:var(--r-soft)}
+html.look-a .btn.pri{background:var(--r);border-color:var(--r)}
+html.look-a.role-officer .side{background:#0E1220;border-right-color:#0E1220;color:#C9CDD6}
+html.look-a.role-officer .side .ws,html.look-a.role-officer .side .me{color:#FFFFFF}
+html.look-a.role-officer .side .nav a{color:#A9AFBA}
+html.look-a.role-officer .side .nav a:hover{background:rgba(255,255,255,.06);color:#FFFFFF}
+html.look-a.role-officer .side .nav a.on{background:rgba(126,156,255,.16);color:#FFFFFF}
+html.look-a.role-officer .side .ct{color:#7C8290}
+html.look-a.role-officer .side .muted{color:#8A90A0}
+html.look-a.role-officer .side .av{background:#7E9CFF;color:#0E1220}
+html.look-a .side .ws{height:auto;flex-wrap:wrap;row-gap:0;padding-top:4px;padding-bottom:4px}
+html.look-a .side .ws::after{content:var(--r-name);flex-basis:100%;padding-left:26px;font:500 10px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+
+/* B. Role band: neutral sidebars, a coloured band across the top and the portal named in the top bar */
+html.look-b .side,html.look-b .top{box-shadow:inset 0 4px 0 var(--r)}
+html.look-b.role-officer .side,html.look-b.role-officer .top{box-shadow:inset 0 4px 0 #0E1220}
+html.look-b .top::before{content:var(--r-name);display:inline-flex;align-items:center;height:22px;padding:0 8px;margin-right:8px;border-radius:999px;background:var(--r-tint);color:var(--r-ink);font:600 11px 'Geist',sans-serif;letter-spacing:.01em;white-space:nowrap}
+html.look-b.role-officer .top::before{background:#0E1220;color:#FFFFFF}
+html.look-b .btn.pri{background:var(--r);border-color:var(--r)}
+
+/* C. Workspace tile: neutral sidebar, the portal's own tile and colour at the top, coloured active marker */
+html.look-c .side .ws{position:relative;height:auto;padding:10px;margin:0 0 4px;border-radius:8px;background:var(--r);color:#FFFFFF;flex-wrap:wrap;row-gap:2px}
+html.look-c.role-officer .side .ws{background:#0E1220}
+html.look-c .side .ws svg path:first-child{fill:#FFFFFF}
+html.look-c .side .ws svg path:last-child{stroke:var(--r)}
+html.look-c.role-officer .side .ws svg path:last-child{stroke:#0E1220}
+html.look-c .side .ws::after{content:var(--r-name);flex-basis:100%;font:500 11px 'Geist',sans-serif;opacity:.8;padding-left:26px}
+html.look-c .side .nav a.on{background:var(--r-tint);color:var(--r-ink);box-shadow:inset 2px 0 0 var(--r)}
+html.look-c.role-officer .side .nav a.on{background:#ECEDF1;color:#0E1220;box-shadow:inset 2px 0 0 #0E1220}
+html.look-c .btn.pri{background:var(--r);border-color:var(--r)}
+html.look-c.role-officer .btn.pri{background:#1F4FD1;border-color:#1F4FD1}
+
+html[class*="look-"] .side,html[class*="look-"] .nav a,html[class*="look-"] .btn.pri{transition:background .3s,color .3s,border-color .3s,box-shadow .3s}

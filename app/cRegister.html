@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" class="role-company look-a" data-home="/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Register, console look with delight</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-height:1.5;color:#0F1115;background:#FFFFFF;-webkit-font-smoothing:antialiased}
+a{color:#1F4FD1}
+.app{display:flex;min-height:900px;background:#FFFFFF}
+.side{width:232px;flex:none;background:#FAFAFB;border-right:1px solid #E6E8EC;display:flex;flex-direction:column;gap:16px;padding:12px;box-sizing:border-box}
+.ws{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;font-weight:600;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;color:#3D4250;text-decoration:none;transition:background .15s}
+.nav a:hover{background:#F1F2F4;color:#0F1115}
+.nav a.on{background:#EBEDF0;color:#0F1115;font-weight:500}
+.nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ct{margin-left:auto;font-family:'Geist Mono',monospace;font-size:11px;color:#8A8F9C}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:48px;border-bottom:1px solid #E6E8EC;display:flex;align-items:center;gap:8px;padding:0 24px;color:#5F6573;box-sizing:border-box}
+.top b{color:#0F1115;font-weight:500}
+.page{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-width:760px}
+h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;color:#0F1115;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;cursor:pointer;box-sizing:border-box;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:#F7F8FA;color:#0F1115}.btn:active{transform:scale(.97)}
+.btn.pri{background:#1F4FD1;border-color:#1F4FD1;color:#FFFFFF}.btn.pri:hover{box-shadow:0 0 0 3px rgba(31,79,209,.18);color:#FFFFFF}
+.badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:#F1F2F4;color:#3D4250;gap:4px;white-space:nowrap}
+.ok{background:#E9F6EF;color:#0B6B47}.info{background:#EEF2FD;color:#1F4FD1}
+.mono{font-family:'Geist Mono',monospace;font-variant-numeric:tabular-nums}
+.muted{color:#8A8F9C}
+.panel{border:1px solid #E6E8EC;border-radius:8px;background:#FFFFFF}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:#3D4250}
+input,textarea{font:13px 'Geist',sans-serif;border:1px solid #E1E3E8;border-radius:6px;padding:7px 10px;transition:border-color .15s,box-shadow .15s;box-sizing:border-box;width:100%}
+input:focus,textarea:focus{outline:none;border-color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:28px;padding:0 10px;border-radius:6px;border:1px solid #E1E3E8;background:#FFFFFF;font:500 12px 'Geist',sans-serif;color:#3D4250;cursor:pointer;transition:all .15s}
+.chip.on{background:#0F1115;border-color:#0F1115;color:#FFFFFF}
+.grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+.hero{position:relative;overflow:hidden;border-radius:12px;background:radial-gradient(620px 340px at 72% 50%,rgba(31,79,209,.5),transparent 70%),#0E1220;color:#FFFFFF;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:40px;align-items:center;padding:44px 48px;min-height:340px;box-sizing:border-box}
+.lat{position:absolute;inset:0;opacity:.14;pointer-events:none;background-image:linear-gradient(115deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%),linear-gradient(65deg,transparent 49.6%,#7E9CFF 49.6%,#7E9CFF 50.4%,transparent 50.4%);background-size:160px 120px;-webkit-mask-image:linear-gradient(90deg,transparent 20%,#000);mask-image:linear-gradient(90deg,transparent 20%,#000)}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
+.big{font-size:38px;font-weight:600;line-height:1.08;margin:0;letter-spacing:-.025em}
+.lede{font-size:15px;color:#C9CDD6;max-width:440px}
+.hbtn{height:36px;padding:0 14px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#FFFFFF;font:500 13px 'Geist',sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background .15s,transform .1s}
+.hbtn:hover{background:rgba(255,255,255,.14)}.hbtn:active{transform:scale(.97)}
+.hbtn.pri{background:#1F4FD1;border-color:#1F4FD1}.hbtn.pri:hover{background:#3D6AF0;box-shadow:0 0 0 3px rgba(126,156,255,.25)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:rgba(126,156,255,.14);color:#C9D5FF;font-size:12px;font-weight:500}
+.seg{display:inline-flex;padding:3px;border-radius:8px;background:rgba(255,255,255,.08);gap:2px}
+.seg button{height:28px;padding:0 12px;border-radius:6px;border:0;background:transparent;color:#C9CDD6;font:500 12px 'Geist',sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover{color:#FFFFFF}.seg button.on{background:#FFFFFF;color:#0E1220}
+.copy>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}.copy>*:nth-child(2){animation-delay:.08s}.copy>*:nth-child(3){animation-delay:.16s}.copy>*:nth-child(4){animation-delay:.24s}.copy>*:nth-child(5){animation-delay:.32s}
+.spark{position:absolute;width:6px;height:6px;border-radius:1px;background:#7E9CFF;bottom:30px;opacity:0;animation:spark 2.4s ease-out forwards}
+@keyframes spark{0%{opacity:0;transform:translateY(0) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-220px) rotate(180deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.blk{border:1px solid #E6E8EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;background:#FFFFFF;transition:border-color .15s,transform .2s,box-shadow .2s;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.blk:hover{border-color:#CDD1D8;transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.06)}
+.lbl{font-size:12px;font-weight:500;color:#5F6573}
+
+.app{display:block;background:#FAFAFB}
+.bar{height:56px;display:flex;align-items:center;gap:8px;padding:0 32px;border-bottom:1px solid #E6E8EC;background:#FFFFFF;font-weight:600;font-size:14px}
+.wrapr{display:grid;grid-template-columns:240px minmax(0,640px);gap:40px;justify-content:center;padding:40px 32px}
+.rail{display:flex;flex-direction:column;gap:2px;position:relative}
+.rs{display:flex;align-items:center;gap:10px;height:36px;padding:0 8px;border-radius:6px;color:#5F6573;transition:background .2s,color .2s}
+.rs.on{background:#FFFFFF;color:#0F1115;font-weight:500;box-shadow:0 1px 2px rgba(15,17,21,.06),inset 0 0 0 1px #E6E8EC}
+.rs .n{width:20px;height:20px;border-radius:999px;border:1px solid #CDD1D8;display:grid;place-items:center;font:500 11px 'Geist Mono',monospace;flex:none;background:#FFFFFF;transition:all .25s}
+.rs.on .n{border-color:#1F4FD1;color:#1F4FD1;box-shadow:0 0 0 3px rgba(31,79,209,.15)}
+.rs.done .n{background:#0F7A4E;border-color:#0F7A4E;color:#FFFFFF;animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.4)}to{transform:scale(1)}}
+.prog{height:4px;border-radius:999px;background:#E6E8EC;overflow:hidden;margin:12px 8px 0}
+.prog i{display:block;height:100%;background:#1F4FD1;border-radius:999px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.card{background:#FFFFFF;border:1px solid #E6E8EC;border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(15,17,21,.04)}
+.slide{animation:slide .4s cubic-bezier(.2,.8,.2,1) both;display:flex;flex-direction:column;gap:14px}
+@keyframes slide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rev{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0F1F3}
+.sentwrap{padding:32px;display:flex;flex-direction:column;gap:16px;max-width:1100px;margin:0 auto}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;perspective:900px}
+.tile{height:92px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);padding:10px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;color:#E6E8EC;animation:deal .6s cubic-bezier(.2,.8,.2,1) both;transition:transform .2s,background .2s}
+.tile:hover{transform:translateY(-4px);background:rgba(255,255,255,.12)}
+.tile:nth-child(1){animation-delay:.5s}.tile:nth-child(2){animation-delay:.62s}.tile:nth-child(3){animation-delay:.74s}.tile:nth-child(4){animation-delay:.86s}.tile:nth-child(5){animation-delay:.98s}
+@keyframes deal{from{opacity:0;transform:translateY(-40px) rotateY(90deg)}to{opacity:1;transform:none}}
+.qd{width:8px;height:8px;border-radius:999px;background:#7E9CFF;animation:blinkq 1.4s ease-in-out infinite}
+@keyframes blinkq{50%{opacity:.3}}
+.hero.reg{grid-template-columns:minmax(0,1fr) 520px}
+.env{position:absolute;right:48px;top:36px}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}.rs.done .n{animation:none}}
+</style>
+
+<link rel="stylesheet" href="looks.css">
+<script>try{var L=new URLSearchParams(location.search).get("look")||(parent!==window&&parent.SBC_LOOK)||"";if(L)document.documentElement.classList.add("look-"+L)}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="app">
+  <div class="bar"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital<span class="muted" style="font-weight: 400; margin-left: 8px">Apply to be SBC-Qualified</span><span style="margin-left: auto; font-weight: 400" class="muted">Already applied? <a href="pcHome.dc.html">Sign in</a></span></div>
+  <sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+    <div class="wrapr">
+      <nav class="rail" aria-label="Steps">
+        <sc-for list="{{rail}}" as="s" hint-placeholder-count="4"><span class="rs {{s.cls}}"><span class="n">{{s.num}}</span>{{s.name}}</span></sc-for>
+        <span class="prog"><i style="width: {{pct}}"></i></span>
+        <span class="muted" style="font-size: 12px; padding: 8px">About 10 minutes. You can save and come back.</span>
+      </nav>
+      <section class="card" aria-label="Form">
+        <sc-for list="{{cur}}" as="v" hint-placeholder-count="1">
+          <div class="slide">
+            <div style="display: flex; flex-direction: column; gap: 2px"><span class="mono muted" style="font-size: 11px">STEP {{v.num}} OF 4</span><h1>{{v.title}}</h1><span class="muted">{{v.sub}}</span></div>
+            <sc-if value="{{v.s0}}" hint-placeholder-val="{{ true }}">
+              <div class="field"><label for="a">Legal company name</label><input id="a" placeholder="Halvorsen Water Systems AS"></div>
+              <div class="g2"><div class="field"><label for="b">Country of registration</label><input id="b" placeholder="Norway"></div><div class="field"><label for="c">Registration number</label><input id="c" placeholder="[org number]"></div></div>
+              <div class="field"><label for="d">Website</label><input id="d" placeholder="halvorsenwater.no"></div>
+            </sc-if>
+            <sc-if value="{{v.s1}}" hint-placeholder-val="{{ false }}">
+              <div class="g2"><div class="field"><label for="e">Your name</label><input id="e" placeholder="Ingrid Halvorsen"></div><div class="field"><label for="f">Role</label><input id="f" placeholder="Managing Director"></div></div>
+              <div class="field"><label for="g">Work email</label><input id="g" placeholder="ingrid@halvorsenwater.no"></div>
+            </sc-if>
+            <sc-if value="{{v.s2}}" hint-placeholder-val="{{ false }}">
+              <div class="field"><label>Sector</label><div class="chips"><sc-for list="{{v.sectors}}" as="x" hint-placeholder-count="5"><button class="chip {{x.on}}" onClick="{{x.pick}}">{{x.name}}</button></sc-for></div></div>
+              <div class="field"><label>Where in the Gulf</label><div class="chips"><sc-for list="{{v.places}}" as="x" hint-placeholder-count="6"><button class="chip {{x.on}}" onClick="{{x.pick}}">{{x.name}}</button></sc-for></div></div>
+            </sc-if>
+            <sc-if value="{{v.s3}}" hint-placeholder-val="{{ false }}">
+              <div><span class="rev"><span class="muted">Company</span><span>Halvorsen Water Systems AS · Norway</span></span><span class="rev"><span class="muted">Contact</span><span>Ingrid Halvorsen, Managing Director</span></span><span class="rev"><span class="muted">Sector</span><span>{{v.secText}}</span></span><span class="rev"><span class="muted">Gulf</span><span>{{v.placeText}}</span></span><span class="rev" style="border: 0"><span class="muted">Fee</span><span>AED [x] <span class="badge">Working answer</span></span></span></div>
+              <span class="muted" style="font-size: 12px">SBC checks identity, ownership, licences, screening and Gulf readiness. Two officers sign before you are qualified.</span>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid #F0F1F3; padding-top: 16px"><button class="btn" onClick="{{back}}">Back</button><button class="btn pri" onClick="{{next}}">{{nextLabel}}</button></div>
+      </section>
+    </div>
+  </sc-if>
+  <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+    <div class="sentwrap">
+      <section class="hero reg" aria-label="Application received">
+        <div class="lat" aria-hidden="true"></div>
+        <div class="copy" style="position: relative; display: flex; flex-direction: column; gap: 14px">
+          <span class="eyebrow">Received · APP-0231</span>
+          <h1 class="big">Application received.</h1>
+          <span class="lede">Your five checks are queued. An SBC officer starts within [x] working days and asks for documents in your checklist.</span>
+          <span style="display: flex; gap: 8px; margin-top: 4px"><a class="hbtn pri" href="pcChecklist.dc.html" style="text-decoration: none">Open your checklist</a><button class="hbtn" onClick="{{restart}}">Replay</button></span>
+        </div>
+        <div style="position: relative; display: flex; flex-direction: column; gap: 10px">
+          <span class="spark" style="left: 10%; animation-delay: .9s"></span><span class="spark" style="left: 24%; animation-delay: calc(.9s + .1s); width: 4px; height: 4px"></span><span class="spark" style="left: 40%; animation-delay: calc(.9s + .25s)"></span><span class="spark" style="left: 58%; animation-delay: calc(.9s + .15s); width: 5px; height: 5px"></span><span class="spark" style="left: 72%; animation-delay: calc(.9s + .3s)"></span><span class="spark" style="left: 88%; animation-delay: calc(.9s + .2s); width: 4px; height: 4px"></span>
+          <span class="mono" style="font-size: 11px; color: #9DB4FF">YOUR FIVE CHECKS</span>
+          <div class="tiles"><sc-for list="{{checks}}" as="c" hint-placeholder-count="5"><div class="tile"><span class="mono" style="font-size: 11px; color: #9DB4FF">0{{c.n}}</span><span style="font-weight: 500; font-size: 12px; line-height: 1.3">{{c.name}}</span><span style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #A9AFBA"><span class="qd"></span>Queued</span></div></sc-for></div>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+</div>
+</template>
+<script>window.SBC_ACTIONS = {"all": {"Messages": {"toast": "Messages is not part of this prototype yet"}, "Open messages": {"toast": "Messages is not part of this prototype yet"}}, "screen": {}};</script>
+<script src="dc-lite.js"></script>
+<script>
+DCLite.mount(document.getElementById('tpl'), function (DCLogic) {
+
+class Component extends DCLogic {
+constructor(p) { super(p); this.state = { step: 0, show: true, sec: ['Water'], where: ['Saudi Arabia', 'United Arab Emirates'] }; }
+componentWillUnmount() { clearTimeout(this.t); }
+go(step) { this.setState({ step, show: false }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ show: true }), 30); }
+renderVals() {
+  const { step, sec, where, show } = this.state;
+  const names = ['Company', 'Contact', 'Gulf plans', 'Review'];
+  const subs = ['As it appears on your registration.', 'The person SBC talks to.', 'So SBC can match you to the right buyers.', 'Check it, then submit.'];
+  const rail = names.map((name, i) => ({ name, num: i < step ? '✓' : String(i + 1), cls: i < step ? 'done' : (i === step ? 'on' : '') }));
+  const tog = (key, list, name) => () => this.setState({ [key]: list.includes(name) ? list.filter((x) => x !== name) : list.concat(name) });
+  const sectors = ['Water', 'Energy', 'Construction', 'Healthcare', 'Logistics'].map((name) => ({ name, on: sec.includes(name) ? 'on' : '', pick: tog('sec', sec, name) }));
+  const places = ['United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman'].map((name) => ({ name, on: where.includes(name) ? 'on' : '', pick: tog('where', where, name) }));
+  const cur = step < 4 && show ? [{ num: step + 1, title: names[step], sub: subs[step], s0: step === 0, s1: step === 1, s2: step === 2, s3: step === 3, sectors, places, secText: sec.join(', ') || 'None', placeText: where.join(', ') || 'None' }] : [];
+  const checks = ['Identity', 'Ownership', 'Licences', 'Screening', 'Gulf readiness'].map((name, i) => ({ name, n: i + 1 }));
+  return { rail, cur, checks, editing: step < 4, sent: step === 4, pct: (Math.min(step, 4) / 4 * 100) + '%', nextLabel: step === 3 ? 'Submit application' : 'Continue',
+    next: () => this.go(step + 1), back: () => step > 0 && this.go(step - 1), restart: () => this.go(0) };
+}
+}
+
+return Component;
+}, document.getElementById('root'));
+</script>
+</body>
+</html>

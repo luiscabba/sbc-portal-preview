@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>SBC Portal Tour</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+
+/* Layout: app shell. Flow rail on the left, the live screen in the middle, a next-step bar under it. Map view swaps in a stage x lane grid. */
+:root{
+  --bg:#F6F7F9; --panel:#FFFFFF; --ink:#0F1115; --ink-2:#3D4250; --mute:#7C8290; --line:#E3E6EB; --hover:#EEF0F4;
+  --cobalt:#1F4FD1; --cobalt-soft:#EAF0FE; --company:#1F4FD1; --officer:#0F1115; --buyer:#0E7C86; --done:#0F7A4E;
+  --night:#0E1220; --stage:#E9EBEF; --go:#1F4FD1;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B0E16; --panel:#121624; --ink:#EDEFF4; --ink-2:#BFC4D0; --mute:#8A90A0; --line:#232A3B; --hover:#1A2032;
+  --cobalt:#7E9CFF; --cobalt-soft:#1A2547; --company:#7E9CFF; --officer:#EDEFF4; --buyer:#4FC3CC; --done:#3FBF84; --night:#070A12; --stage:#070A12; --go:#3558E0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B0E16; --panel:#121624; --ink:#EDEFF4; --ink-2:#BFC4D0; --mute:#8A90A0; --line:#232A3B; --hover:#1A2032;
+  --cobalt:#7E9CFF; --cobalt-soft:#1A2547; --company:#7E9CFF; --officer:#EDEFF4; --buyer:#4FC3CC; --done:#3FBF84; --night:#070A12; --stage:#070A12; --go:#3558E0; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+a{color:var(--cobalt)}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.app{display:flex;flex-direction:column;height:100%}
+header{display:flex;align-items:center;gap:16px;height:52px;flex:none;border-bottom:1px solid var(--line);background:var(--panel);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;white-space:nowrap}
+.brand small{font-weight:400;color:var(--mute);font-size:13px}
+.tabs{display:inline-flex;padding:3px;border-radius:8px;background:var(--hover);gap:2px}
+.tabs button{height:28px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:var(--ink-2);font-weight:500;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.lanes{display:flex;gap:12px;margin-left:auto;color:var(--mute);font-size:12px}
+.lanes span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:2px;flex:none}
+.d-company{background:var(--company)}.d-officer{background:var(--officer)}.d-buyer{background:var(--buyer)}
+.body{flex:1;min-height:0;display:flex}
+/* rail */
+.rail{width:288px;flex:none;border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:12px 10px 24px}
+.stg{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:14px 8px 6px}
+.step{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;width:100%;min-height:36px;padding:4px 8px;border:0;border-radius:6px;background:transparent;text-align:left;cursor:pointer;transition:background .15s}
+.step:hover{background:var(--hover)}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--mute);width:24px;height:22px;border-radius:5px;display:grid;place-items:center;border:1px solid var(--line)}
+.step .t{display:flex;flex-direction:column;min-width:0}
+.step .t b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step .t i{font-style:normal;font-size:11px;color:var(--mute)}
+.step.seen .n{background:var(--done);border-color:var(--done);color:#FFFFFF}
+.step[aria-current="step"]{background:var(--cobalt-soft)}
+.step[aria-current="step"] .n{background:var(--go);border-color:var(--go);color:#FFFFFF}
+.step[aria-current="step"] .t b{color:var(--ink);font-weight:600}
+/* main */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.head{display:flex;align-items:flex-start;gap:16px;padding:18px 24px 14px;padding-left:max(24px,env(safe-area-inset-left,0px))}
+.head .meta{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:500;color:var(--ink-2);width:max-content}
+h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+h1 .num{font-family:var(--mono);font-weight:500;color:var(--mute);margin-right:8px}
+.desc{color:var(--ink-2);font-size:14px;max-width:68ch}
+.count{font-family:var(--mono);font-size:12px;color:var(--mute);white-space:nowrap;padding-top:4px}
+.ghost{height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--panel);display:inline-flex;align-items:center;gap:6px;cursor:pointer;text-decoration:none;color:var(--ink);font-weight:500;white-space:nowrap}
+.ghost:hover{background:var(--hover)}
+.stagewrap{flex:1;min-height:0;overflow:auto;padding:0 24px 16px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.frame{position:relative;margin:0 auto;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#FFFFFF;box-shadow:0 12px 40px rgba(15,17,21,.08);max-width:100%}
+.frame iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;background:#FFFFFF}
+.next{flex:none;display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);background:var(--panel);padding-block:12px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.back{display:flex;flex-direction:column;align-items:flex-start;gap:0;border:0;background:transparent;cursor:pointer;padding:4px 8px;border-radius:6px;text-align:left;min-width:0}
+.back:hover{background:var(--hover)}
+.back small,.go small{font-size:11px;color:var(--mute);font-family:var(--mono)}
+.back span{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.go{margin-left:auto;display:flex;align-items:center;gap:14px;border:0;border-radius:8px;background:var(--go);color:#FFFFFF;cursor:pointer;padding:8px 10px 8px 16px;text-align:left;min-width:0;transition:transform .1s,box-shadow .15s}
+.go small{color:rgba(255,255,255,.75)}
+.go:hover{box-shadow:0 0 0 3px var(--cobalt-soft)}.go:active{transform:scale(.98)}
+.go .lbl{display:flex;flex-direction:column;min-width:0}
+.go .lbl span{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.go .who{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.85)}
+.go .arr{width:30px;height:30px;border-radius:6px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none}
+.go .who .dot{outline:1px solid rgba(255,255,255,.6)}
+.go[disabled]{background:var(--hover);color:var(--mute);cursor:default}
+.handoff{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px}
+.handoff b{color:var(--ink-2);font-weight:500}
+.mobile-pick{display:none}
+#tMap,.looks{display:none !important}
+.brand{text-decoration:none;color:inherit}
+.reset{height:28px}
+.looks{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:8px;background:var(--hover)}
+.looks span{font-size:11px;color:var(--mute);padding:0 6px 0 4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.looks button{height:26px;padding:0 10px;border:0;border-radius:6px;background:transparent;color:var(--ink-2);font-weight:500;font-size:12px;cursor:pointer;white-space:nowrap}
+.looks button[aria-checked="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+@media (max-width:1180px){.looks span{display:none}.looks button{padding:0 7px}}
+.reset svg{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.reset.spin svg{transform:rotate(-360deg)}
+.toast{font-size:12px;color:var(--done);font-weight:500;opacity:0;transition:opacity .2s;white-space:nowrap}
+.toast.on{opacity:1}
+/* map */
+.map{flex:1;overflow:auto;padding-block:24px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.mapgrid{display:grid;grid-template-columns:132px repeat(var(--cols),minmax(150px,1fr));gap:8px;min-width:max-content}
+.mh{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:4px 2px 8px;border-bottom:2px solid var(--line)}
+.ml{display:flex;align-items:flex-start;gap:8px;padding-top:12px;font-weight:600}
+.cell{display:flex;flex-direction:column;gap:6px;padding-top:8px}
+.card{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:10px 12px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.08);border-color:var(--cobalt)}
+.card .n{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.card b{font-weight:500}
+.card.seen .n::after{content:" · seen";color:var(--done)}
+.maphint{color:var(--mute);margin:0 0 16px;max-width:70ch}
+@media (max-width:900px){
+  .rail{display:none}
+  .lanes{display:none}
+  .mobile-pick{display:block;padding:0 16px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .mobile-pick select{width:100%;height:36px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;padding:0 8px}
+  .head{padding:14px 16px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));flex-wrap:wrap}
+  .stagewrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .next{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .handoff{display:none}
+  .toast{display:none}
+  .looks{display:none}
+  .brand small{display:none}
+  .back{max-width:38%}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <a class="brand" href="/" title="Back to the portal preview"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital <small>Guided tour · prototype</small></a>
+    <div class="tabs" role="tablist"><button id="tWalk" role="tab" aria-selected="true">Walkthrough</button><button id="tMap" role="tab" aria-selected="false">Map</button></div>
+    <div class="looks" role="radiogroup" aria-label="Role look"><span>Look</span><button data-look="" aria-checked="true" role="radio">Current</button><button data-look="a" role="radio" aria-checked="false">A · Tinted</button><button data-look="b" role="radio" aria-checked="false">B · Band</button><button data-look="c" role="radio" aria-checked="false">C · Tile</button></div>
+    <button class="ghost reset" id="reset" title="Back to step 1, clears viewed marks and restarts every screen"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>Restart tour</button>
+    <span class="toast" id="toast" role="status" aria-live="polite"></span>
+    <div class="lanes" aria-label="Who uses each screen"><span><i class="dot d-company"></i>Company</span><span><i class="dot d-officer"></i>SBC officer</span><span><i class="dot d-buyer"></i>Buyer</span></div>
+  </header>
+
+  <div class="body" id="walk">
+    <nav class="rail" id="rail" aria-label="Flow"></nav>
+    <main class="main">
+      <div class="head">
+        <div class="meta">
+          <span class="chip" id="chip"></span>
+          <h1 id="h1"></h1>
+          <span class="desc" id="desc"></span>
+        </div>
+        <span class="count" id="count"></span>
+        <a class="ghost" id="open" target="_blank" rel="noopener">Open alone ↗</a>
+      </div>
+      <div class="mobile-pick"><label for="pick" hidden>Jump to step</label><select id="pick"></select></div>
+      <div class="stagewrap"><div class="frame" id="frame"><iframe id="ifr" title="Prototype screen"></iframe></div></div>
+      <div class="next">
+        <button class="back" id="back"><small>Back</small><span id="backT"></span></button>
+        <span class="handoff" id="handoff"></span>
+        <button class="go" id="go"><span class="lbl"><small>Next</small><span id="goT"></span><span class="who" id="goW"></span></span><span class="arr" aria-hidden="true">→</span></button>
+      </div>
+    </main>
+  </div>
+
+  <div class="map" id="map" hidden>
+    <p class="maphint">Stages run left to right. Each row is one side of the portal. Pick any screen to open it in the walkthrough.</p>
+    <div class="mapgrid" id="mapgrid"></div>
+  </div>
+</div>
+
+<script>
+var STEPS = [{"id": "cRegister", "num": "1", "title": "Register", "lane": "company", "stage": "Apply", "desc": "A company applies in four short steps. Its five checks are queued for an officer."}, {"id": "v2Board", "num": "2", "title": "Board", "lane": "officer", "stage": "Review", "desc": "Officers see every file by step: check, second check, introduce. Waiting and done sit apart."}, {"id": "v2Company", "num": "3", "title": "Company record", "lane": "officer", "stage": "Review", "desc": "The full record for one company: checks, documents, history and who touched it."}, {"id": "pcHome", "num": "4", "title": "Status", "lane": "company", "stage": "Review", "desc": "The company sees where its file is and what SBC needs next."}, {"id": "pcChecklist", "num": "5", "title": "Evidence checklist", "lane": "company", "stage": "Review", "desc": "The company uploads the documents officers asked for."}, {"id": "v2Check", "num": "6", "title": "Check", "lane": "officer", "stage": "Review", "desc": "Officer one works through the five checks. AI notes stay in pop-ups, the officer decides."}, {"id": "v2Evidence", "num": "7", "title": "Evidence", "lane": "officer", "stage": "Review", "desc": "A document or screening hit is reviewed side by side with the source."}, {"id": "v2Plan", "num": "8", "title": "Set action plan", "lane": "officer", "stage": "Fix gaps", "desc": "If something is missing, the officer sets an action plan with due dates. The company becomes Conditionally Qualified."}, {"id": "cPlan", "num": "9", "title": "Action plan", "lane": "company", "stage": "Fix gaps", "desc": "The company ticks off each item. When all are done it sends the file back for re-check."}, {"id": "v2Sign", "num": "10", "title": "Second officer signs", "lane": "officer", "stage": "Sign", "desc": "A second officer signs. Two signatures make the company SBC-Qualified."}, {"id": "pcQualified2", "num": "11", "title": "SBC-Qualified", "lane": "company", "stage": "Sign", "desc": "The company gets its mark, a verification link and the badge for its website."}, {"id": "bNeed", "num": "12", "title": "Post a need", "lane": "buyer", "stage": "Buyer need", "desc": "A Gulf buyer posts what it needs. SBC starts matching."}, {"id": "bNeeds", "num": "13", "title": "Your needs", "lane": "buyer", "stage": "Buyer need", "desc": "The buyer tracks each need from posting to meeting."}, {"id": "v2Buyers", "num": "14", "title": "Buyers", "lane": "officer", "stage": "Buyer need", "desc": "Officers see every buyer and their open needs."}, {"id": "v2Need", "num": "15", "title": "Buyer need", "lane": "officer", "stage": "Buyer need", "desc": "One buyer need with the qualified companies that fit it."}, {"id": "v2Introduce", "num": "16", "title": "Approve introduction", "lane": "officer", "stage": "Introduce", "desc": "An officer approves each introduction before anyone sees it."}, {"id": "cIntros", "num": "17", "title": "Introduction received", "lane": "company", "stage": "Introduce", "desc": "The company gets the introduction and accepts or declines."}, {"id": "bPack", "num": "18", "title": "Introduction pack", "lane": "buyer", "stage": "Introduce", "desc": "The buyer gets a signed pack: five checks, the officer approval and why they fit."}, {"id": "bCheck", "num": "19", "title": "Check a mark", "lane": "buyer", "stage": "Verify", "desc": "Anyone can check a mark ID against the live register."}, {"id": "v2Companies", "num": "R1", "title": "Companies", "lane": "officer", "stage": "Records", "desc": "All companies and their status, for officers."}, {"id": "v2Agents", "num": "R2", "title": "Agent panel", "lane": "officer", "stage": "Records", "desc": "What each AI agent prepared, and what officers did with it."}, {"id": "v2Audit", "num": "R3", "title": "Audit log", "lane": "officer", "stage": "Records", "desc": "Every consequential step, who did it and when."}];
+var LANE = { company: 'Company', officer: 'SBC officer', buyer: 'Buyer' };
+var cur = 0, seen = {};
+try { seen = JSON.parse(localStorage.getItem('sbcFlowSeen') || '{}'); } catch (e) {}
+function save() { try { localStorage.setItem('sbcFlowSeen', JSON.stringify(seen)); } catch (e) {} }
+var $ = function (id) { return document.getElementById(id); };
+function laneChip(l) { return '<i class="dot d-' + l + '"></i>' + LANE[l]; }
+function label(s) { return (s.num[0] === 'R' ? s.num : 'Step ' + s.num) + ' · ' + s.title; }
+
+function buildRail() {
+  var html = '', last = '';
+  STEPS.forEach(function (s, i) {
+    if (s.stage !== last) { html += '<div class="stg">' + s.stage + '</div>'; last = s.stage; }
+    html += '<button class="step" data-i="' + i + '"><span class="n">' + s.num + '</span><span class="t"><b>' + s.title + '</b><i>' + LANE[s.lane] + '</i></span><i class="dot d-' + s.lane + '"></i></button>';
+  });
+  $('rail').innerHTML = html;
+  $('rail').addEventListener('click', function (e) { var b = e.target.closest('.step'); if (b) show(+b.dataset.i); });
+  var opts = '';
+  STEPS.forEach(function (s, i) { opts += '<option value="' + i + '">' + s.num + ' · ' + s.title + ' (' + LANE[s.lane] + ')</option>'; });
+  $('pick').innerHTML = opts;
+  $('pick').addEventListener('change', function () { show(+this.value); });
+}
+function buildMap() {
+  var stages = []; STEPS.forEach(function (s) { if (stages.indexOf(s.stage) < 0) stages.push(s.stage); });
+  var g = $('mapgrid'); g.style.setProperty('--cols', stages.length);
+  var html = '<span></span>' + stages.map(function (st) { return '<span class="mh">' + st + '</span>'; }).join('');
+  ['company', 'officer', 'buyer'].forEach(function (l) {
+    html += '<span class="ml"><i class="dot d-' + l + '" style="margin-top:6px"></i>' + LANE[l] + '</span>';
+    stages.forEach(function (st) {
+      html += '<div class="cell">' + STEPS.map(function (s, i) { return s.lane === l && s.stage === st ? '<button class="card' + (seen[s.id] ? ' seen' : '') + '" data-i="' + i + '"><span class="n">' + s.num + '</span><b>' + s.title + '</b></button>' : ''; }).join('') + '</div>';
+    });
+  });
+  g.innerHTML = html;
+}
+$('mapgrid').addEventListener('click', function (e) { var b = e.target.closest('.card'); if (b) { tab('walk'); show(+b.dataset.i); } });
+
+function fit() {
+  var f = $('frame'), w = f.parentNode.clientWidth - parseFloat(getComputedStyle(f.parentNode).paddingLeft) - parseFloat(getComputedStyle(f.parentNode).paddingRight);
+  var hgt = f.parentNode.clientHeight - 16; var s = Math.min(1, w / 1440, window.innerWidth > 900 && hgt > 200 ? hgt / 900 : 9);
+  f.style.width = (1440 * s) + 'px'; f.style.height = (900 * s) + 'px';
+  $('ifr').style.transform = 'scale(' + s + ')';
+}
+function show(i, fromHash) {
+  cur = Math.max(0, Math.min(STEPS.length - 1, i));
+  var s = STEPS[cur], p = STEPS[cur - 1], n = STEPS[cur + 1];
+  seen[s.id] = 1; save();
+  $('chip').innerHTML = laneChip(s.lane) + ' · ' + s.stage;
+  $('h1').innerHTML = '<span class="num">' + s.num + '</span>' + s.title;
+  $('desc').textContent = s.desc;
+  $('count').textContent = (s.num[0] === 'R' ? 'Reference ' : 'Step ' + s.num + ' of 19');
+  $('ifr').src = 'app/' + s.id + '.html';
+  $('open').href = 'app/' + s.id + '.html';
+  $('back').disabled = !p; $('back').style.visibility = p ? 'visible' : 'hidden';
+  $('backT').textContent = p ? p.num + ' · ' + p.title : '';
+  if (n) {
+    $('go').disabled = false; $('goT').textContent = n.num + ' · ' + n.title;
+    $('goW').innerHTML = '<i class="dot d-' + n.lane + '"></i>' + LANE[n.lane] + ' · ' + n.stage;
+    $('handoff').innerHTML = n.lane !== s.lane ? 'Hands over to <b>' + LANE[n.lane] + '</b>' : '';
+  } else { $('go').disabled = true; $('goT').textContent = 'End of flow'; $('goW').textContent = ''; $('handoff').innerHTML = ''; }
+  [].forEach.call(document.querySelectorAll('.step'), function (b, k) {
+    b.classList.toggle('seen', !!seen[STEPS[k].id] && k !== cur);
+    if (k === cur) { b.setAttribute('aria-current', 'step'); b.scrollIntoView({ block: 'nearest' }); } else b.removeAttribute('aria-current');
+  });
+  $('pick').value = cur;
+  if (!fromHash) { try { history.replaceState(null, '', '#' + s.id); } catch (e) {} }
+  buildMap();
+}
+function tab(t) {
+  $('walk').hidden = t !== 'walk'; $('map').hidden = t !== 'map';
+  $('tWalk').setAttribute('aria-selected', t === 'walk'); $('tMap').setAttribute('aria-selected', t === 'map');
+  if (t === 'walk') fit();
+}
+window.SBC_LOOK = '';
+window.SBC_LOOK = 'a';
+function applyLook() {
+  [].forEach.call(document.querySelectorAll('.looks button'), function (b) { b.setAttribute('aria-checked', b.dataset.look === window.SBC_LOOK); });
+  try {
+    var root = $('ifr').contentDocument.documentElement;
+    root.classList.remove('look-a', 'look-b', 'look-c');
+    if (window.SBC_LOOK) root.classList.add('look-' + window.SBC_LOOK);
+  } catch (e) {}
+}
+document.querySelector('.looks').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  window.SBC_LOOK = b.dataset.look; try { localStorage.setItem('sbcLook', window.SBC_LOOK); } catch (er) {}
+  applyLook();
+});
+$('ifr').addEventListener('load', applyLook);
+applyLook();
+$('reset').onclick = function () {
+  seen = {}; save();
+  var r = $('reset'); r.classList.remove('spin'); void r.offsetWidth; r.classList.add('spin');
+  tab('walk'); show(0);
+  $('ifr').src = 'about:blank'; setTimeout(function () { $('ifr').src = 'app/' + STEPS[0].id + '.html'; }, 30);
+  $('rail').scrollTop = 0;
+  var t = $('toast'); t.textContent = 'Tour restarted'; t.classList.add('on');
+  clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('on'); }, 2200);
+};
+$('tWalk').onclick = function () { tab('walk'); };
+$('tMap').onclick = function () { tab('map'); };
+$('go').onclick = function () { show(cur + 1); };
+$('back').onclick = function () { show(cur - 1); };
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowRight') show(cur + 1);
+  if (e.key === 'ArrowLeft') show(cur - 1);
+});
+window.addEventListener('message', function (e) {
+  var id = e.data && e.data.sbcGo; if (!id) return;
+  for (var k = 0; k < STEPS.length; k++) if (STEPS[k].id === id) { show(k); return; }
+});
+window.addEventListener('resize', fit);
+if (window.ResizeObserver) new ResizeObserver(fit).observe($('frame').parentNode);
+buildRail();
+var h = (location.hash || '').slice(1), start = 0;
+STEPS.forEach(function (s, k) { if (s.id === h) start = k; });
+show(start, true); fit();
+</script>
+
+</body>
+</html>
