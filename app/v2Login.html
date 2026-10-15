@@ -19,7 +19,7 @@ body{margin:0;font-family:'Geist',system-ui,sans-serif;font-size:13px;line-heigh
 .eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9DB4FF}
 .claim h2{margin:0;font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-.02em}
 .claim p{margin:0;color:#C9CDD6;font-size:14px}
-.side{display:flex;flex-direction:column;justify-content:center;padding:48px 64px;gap:22px}
+.signin{display:flex;flex-direction:column;justify-content:center;padding:48px 64px;gap:22px}
 h1{font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em}
 .muted{color:#8A8F9C}
 .field{display:flex;flex-direction:column;gap:6px}
@@ -38,7 +38,7 @@ input.filled{border-color:#1F4FD1;background:#F7F9FF}
 @keyframes sp{to{transform:rotate(360deg)}}
 .ok{display:flex;align-items:center;gap:12px;padding:14px;border-radius:10px;background:#E9F6EF;color:#0B6B47;animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.side>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}.side>*:nth-child(2){animation-delay:.05s}.side>*:nth-child(3){animation-delay:.1s}.side>*:nth-child(4){animation-delay:.15s}.side>*:nth-child(5){animation-delay:.2s}
+.signin>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}.signin>*:nth-child(2){animation-delay:.05s}.signin>*:nth-child(3){animation-delay:.1s}.signin>*:nth-child(4){animation-delay:.15s}.signin>*:nth-child(5){animation-delay:.2s}
 .caret{display:inline-block;width:1px;height:14px;background:#1F4FD1;vertical-align:middle;animation:bl 1s steps(1) infinite}
 @keyframes bl{50%{opacity:0}}
 .foot{font-size:12px;color:#8A8F9C;display:flex;gap:16px}
@@ -56,11 +56,11 @@ input.filled{border-color:#1F4FD1;background:#F7F9FF}
   <section class="night" aria-label="SBC officer console">
     <div class="lat" aria-hidden="true"></div>
     <div class="brand"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="#1F4FD1"></path><path d="M12 12 21 7M12 12v10M12 12 3 7" stroke="#FFFFFF" stroke-width="1.2" fill="none"></path></svg>SBC Capital</div>
-    <div class="cube" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 21 7 12 12 3 7z" fill="#3D6AF0" stroke="#0E1220" stroke-width=".2"></path><path d="M3 7 12 12v10L3 17z" fill="#1A1D24" stroke="#3D6AF0" stroke-width=".2"></path><path d="M21 7 12 12v10l9-5z" fill="#1F4FD1" stroke="#0E1220" stroke-width=".2"></path></svg></div>
+    <div class="cube" aria-hidden="true" data-hero-cube><svg viewBox="0 0 24 24"><path d="M12 2 21 7 12 12 3 7z" fill="#3D6AF0" stroke="#0E1220" stroke-width=".2"></path><path d="M3 7 12 12v10L3 17z" fill="#1A1D24" stroke="#3D6AF0" stroke-width=".2"></path><path d="M21 7 12 12v10l9-5z" fill="#1F4FD1" stroke="#0E1220" stroke-width=".2"></path></svg></div>
     <div class="claim"><span class="eyebrow">SBC officer console</span><h2>Every company checked by two officers before a buyer sees it.</h2><p>Staff access only. Every action you take is recorded in the audit log.</p></div>
   </section>
 
-  <section class="side" aria-label="Sign in">
+  <section class="signin" aria-label="Sign in">
     <div style="display: flex; flex-direction: column; gap: 4px"><h1>Sign in</h1><span class="muted">SBC officer console</span></div>
 
     <div class="demo">
@@ -125,5 +125,8 @@ renderVals() {
 return Component;
 }, document.getElementById('root'));
 </script>
+<style>.cube{animation:none!important;width:380px!important;height:380px!important}</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/hero-cube.js"></script>
 </body>
 </html>

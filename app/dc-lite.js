@@ -58,6 +58,7 @@
       var v = list[i];
       if (!cur) { parent.appendChild(make(v)); continue; }
       var next = cur.nextSibling;
+      if (cur.__live) { cur = next; continue; }
       if ('t' in v) { if (cur.nodeType === 3) { if (cur.nodeValue !== v.t) cur.nodeValue = v.t; } else parent.replaceChild(make(v), cur); }
       else if (cur.nodeType === 1 && cur.localName === v.tag) patch(cur, v);
       else parent.replaceChild(make(v), cur);
