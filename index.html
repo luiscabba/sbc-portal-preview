@@ -69,8 +69,9 @@ h2{margin:0 0 6px;font-size:24px;letter-spacing:-.015em;font-weight:600}
 .sn{font:500 11px var(--mono);color:var(--mute)}
 .st{font-weight:600}
 .sl{display:flex;gap:4px}.sl .d{width:8px;height:8px}
-.tour{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:22px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
-.tour p{margin:0;color:var(--ink-2);flex:1;min-width:240px}
+.tourwrap{display:flex;flex-direction:column;gap:18px;padding:24px;border-radius:16px;border:1px dashed var(--line);background:linear-gradient(180deg,var(--panel),transparent)}
+.thead{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;justify-content:space-between}
+.thead>div{display:flex;flex-direction:column;gap:6px;max-width:64ch}
 .btn{height:40px;padding:0 16px;border-radius:8px;background:var(--cobalt);color:#FFFFFF;font:500 14px var(--sans);display:inline-flex;align-items:center;gap:8px;text-decoration:none}
 footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));color:var(--mute);font-size:13px}
 @media (max-width:900px){.hgrid{grid-template-columns:1fr;padding-block:24px 48px}.cube{display:none}.doors{grid-template-columns:1fr}.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -87,7 +88,7 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
         <span class="eyebrow">SBC Strategic Portal</span>
         <h1>Portal preview</h1>
         <p class="lede">One portal, three sides. Companies get SBC-Qualified, SBC officers check and sign every file, and Gulf buyers receive signed introductions. Open any side and click through it as that user.</p>
-        <div class="cta"><a class="hbtn pri" href="/tour">Take the guided tour</a><a class="hbtn" href="#doors">Open a portal</a></div>
+        <div class="cta"><a class="hbtn pri" href="#doors">Explore a portal</a><a class="hbtn" href="#tour">Guided tour</a></div>
       </div>
       <div class="cube" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 21 7 12 12 3 7z" fill="#3D6AF0" stroke="#0E1220" stroke-width=".2"></path><path d="M3 7 12 12v10L3 17z" fill="#1A1D24" stroke="#3D6AF0" stroke-width=".2"></path><path d="M21 7 12 12v10l9-5z" fill="#1F4FD1" stroke="#0E1220" stroke-width=".2"></path></svg></div>
     </div>
@@ -96,8 +97,8 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
 
 <main class="in">
   <section id="doors" aria-labelledby="h-doors">
-    <h2 id="h-doors">Open a portal</h2>
-    <p class="sub">Each side has its own look, so you always know whose screen you are on.</p>
+    <h2 id="h-doors">Explore a portal</h2>
+    <p class="sub">Open one side and use it freely. You stay inside that portal; to follow work as it passes between sides, use the guided tour below.</p>
     <div class="doors">
       <a class="door" href="/officer" style="--rc:#0E1220;--rs:#0E1220;--rl:#2A3044;--ra:#3A4A86;--rh:#7E9CFF">
         <div class="mini" aria-hidden="true"><div class="ms"><i class="logo"></i><i class="on"></i><i></i><i></i><i></i></div><div class="mm"><i class="t"></i><div class="row"><i></i><i></i><i></i></div><i></i><i style="width:70%"></i></div></div>
@@ -132,15 +133,9 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
     </div>
   </section>
 
-  <section aria-labelledby="h-stages">
-    <h2 id="h-stages">How the three sides work together</h2>
-    <p class="sub">Seven stages from application to a verified mark. Pick one to start the tour there.</p>
+  <section id="tour" class="tourwrap" aria-labelledby="h-tour">
+    <div class="thead"><div><span class="who">Separate from the portals</span><h2 id="h-tour">Guided tour</h2><p class="sub" style="margin:0">All 19 steps in order. It moves between company, officer and buyer screens to show how one file travels through SBC. Start at the beginning or pick a stage.</p></div><a class="btn" href="/tour">Start the tour →</a></div>
     <div class="stages"><a class="stage" href="/tour#cRegister"><span class="sn">1</span><span class="st">Apply</span><span class="sl"><i class="d d-company"></i></span></a><a class="stage" href="/tour#v2Board"><span class="sn">2</span><span class="st">Review</span><span class="sl"><i class="d d-officer"></i><i class="d d-company"></i></span></a><a class="stage" href="/tour#v2Plan"><span class="sn">3</span><span class="st">Fix gaps</span><span class="sl"><i class="d d-officer"></i><i class="d d-company"></i></span></a><a class="stage" href="/tour#v2Sign"><span class="sn">4</span><span class="st">Sign</span><span class="sl"><i class="d d-officer"></i><i class="d d-company"></i></span></a><a class="stage" href="/tour#bNeed"><span class="sn">5</span><span class="st">Buyer need</span><span class="sl"><i class="d d-buyer"></i><i class="d d-officer"></i></span></a><a class="stage" href="/tour#v2Introduce"><span class="sn">6</span><span class="st">Introduce</span><span class="sl"><i class="d d-officer"></i><i class="d d-company"></i><i class="d d-buyer"></i></span></a><a class="stage" href="/tour#bCheck"><span class="sn">7</span><span class="st">Verify</span><span class="sl"><i class="d d-buyer"></i></span></a></div>
-  </section>
-
-  <section class="tour" aria-label="Guided tour">
-    <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:240px"><h2 style="margin:0">Guided tour</h2><p>All 19 steps in order, showing who acts at each point and where work passes between company, officer and buyer.</p></div>
-    <a class="btn" href="/tour">Start the tour →</a>
   </section>
 </main>
 

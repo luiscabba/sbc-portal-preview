@@ -106,6 +106,9 @@
     requestAnimationFrame(function () { t.style.opacity = '1'; t.style.transform = 'translate(-50%,0)'; });
     clearTimeout(tw); tw = setTimeout(function () { t.style.opacity = '0'; t.style.transform = 'translate(-50%,16px)'; }, 2400);
   }
+  var ROLE_NAME = { officer: 'SBC officer console', company: 'company portal', buyer: 'buyer portal' };
+  function myRole() { var m = document.documentElement.className.match(/role-(\w+)/); return m ? m[1] : ''; }
+  function crossRole(id) { var r = (window.SBC_ROLES || {})[id]; return window.parent === window && r && myRole() && r !== myRole(); }
   function labelOf(el) {
     var c = el.cloneNode(true);
     [].forEach.call(c.querySelectorAll('.ct,.badge'), function (x) { x.remove(); });
@@ -114,7 +117,7 @@
   function act(el, a) {
     if (a.copy && navigator.clipboard) navigator.clipboard.writeText(a.copy).catch(function () {});
     if (a.toggle) { var on = el.getAttribute('data-on') === '1'; el.setAttribute('data-on', on ? '0' : '1'); el.style.background = on ? '' : '#EEF2FD'; el.style.borderColor = on ? '' : '#1F4FD1'; el.style.color = on ? '' : '#1F4FD1'; toast(on ? 'Showing all files' : a.toast); return; }
-    if (a.toast) toast(a.toast);
+    if (a.toast && !(a.go && crossRole(a.go))) toast(a.toast);
     if (a.done) {
       el.textContent = '';
       el.insertAdjacentHTML('beforeend', '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="margin-right:2px"><path d="M5 12l5 5 9-10"></path></svg>');
@@ -122,14 +125,17 @@
       el.style.pointerEvents = 'none'; el.style.opacity = '.75'; el.setAttribute('aria-disabled', 'true');
       el.animate && el.animate([{ transform: 'scale(.94)' }, { transform: 'scale(1.04)' }, { transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.3,1.6,.5,1)' });
     }
-    if (a.go) setTimeout(function () { go(a.go); }, a.toast ? 650 : 0);
+    if (a.go) {
+      if (crossRole(a.go)) { toast((a.toast ? a.toast + '. ' : '') + 'The next step happens in the ' + ROLE_NAME[(window.SBC_ROLES || {})[a.go]] + '.'); return; }
+      setTimeout(function () { go(a.go); }, a.toast ? 650 : 0);
+    }
   }
   document.addEventListener('click', function (e) {
     var el = e.target.closest && e.target.closest('a[href],button'); if (!el) return;
     if (el.__ev && typeof el.__ev.click === 'function') return;
     var h = el.tagName === 'A' ? el.getAttribute('href') : null;
     var m = h && h.match(/^([A-Za-z0-9]+)\.dc\.html/);
-    if (m) { e.preventDefault(); go(m[1]); return; }
+    if (m) { e.preventDefault(); if (crossRole(m[1])) { toast('That screen is in the ' + ROLE_NAME[window.SBC_ROLES[m[1]]] + '. Use the guided tour to follow work between sides.'); return; } go(m[1]); return; }
     if (el.id === 'dc-home') return;
     if (h && h !== '#' && h !== '') return;
     e.preventDefault();
