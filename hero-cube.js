@@ -73,7 +73,8 @@
       scene.add(new THREE.AmbientLight('#1B2240', 0.5));
       return grp;
   }
-  document.querySelectorAll('[data-hero-cube]').forEach(function (el, idx) {
+  function init() { document.querySelectorAll('[data-hero-cube]:not([data-hc])').forEach(function (el, idx) {
+    el.setAttribute('data-hc', '1');
     var renderer;
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return; }
     if (!renderer.getContext()) return;
@@ -105,5 +106,6 @@
       renderer.render(scene, cam);
     }
     requestAnimationFrame(frame);
-  });
+  }); }
+  init(); window.SBCHeroCube = init;
 })();
