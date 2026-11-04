@@ -113,8 +113,8 @@
     });
     var upCards = up.map(function (c) {
       return '<div class="card wait" data-a="nav" data-h="company/' + c.id + '" role="link" tabindex="0"><div class="c1"><span class="nm">' + E(c.short) + '</span><span class="mono">' + D.age(c.since) + '</span></div>' +
-        '<div class="cf"><div class="bar"><span style="width:' + Math.round(100 * c.uploads.done / c.uploads.total) + '%"></span></div><span class="mono muted">' + c.uploads.done + '/' + c.uploads.total + '</span></div>' +
-        '<span class="cs">Missing: ' + E(c.uploads.missing[0]) + '</span><div class="cf"><span></span><button class="btn sm" data-a="remind" data-id="' + c.id + '">Remind</button></div></div>';
+        '<div class="cf"><div class="bar"><span style="width:' + Math.round(100 * S.uploads(c).done / S.uploads(c).total) + '%"></span></div><span class="mono muted">' + S.uploads(c).done + '/' + S.uploads(c).total + '</span></div>' +
+        '<span class="cs">' + (S.uploads(c).missing.length ? 'Missing: ' + E(S.uploads(c).missing[0]) : 'Ready to send') + '</span><div class="cf"><span></span><button class="btn sm" data-a="remind" data-id="' + c.id + '">Remind</button></div></div>';
     });
     var fixCards = fix.map(function (c) {
       var it = c.plan ? c.plan.items : [], dn = it.filter(function (x) { return x.done; }).length;
@@ -278,8 +278,8 @@
     if (tab === 'overview') {
       var leftp = [], rightp = [];
       if (c.stage === 'uploading') {
-        leftp.push('<section class="panel"><div class="ph">Uploads<span class="ct">' + c.uploads.done + '/' + c.uploads.total + '</span></div><div class="pb" style="display:flex;flex-direction:column;gap:10px"><div class="bar" style="height:6px"><span style="width:' + Math.round(100 * c.uploads.done / c.uploads.total) + '%"></span></div>' +
-          '<span class="sub">The rules run once every document is in. Still missing:</span>' + c.uploads.missing.map(function (m) { return '<div class="q-next" style="padding:0"><span class="st pend"></span><span class="tx" style="color:var(--ink)">' + E(m) + '</span></div>'; }).join('') + '</div></section>');
+        var uu = S.uploads(c); leftp.push('<section class="panel"><div class="ph">Uploads<span class="ct">' + uu.done + '/' + uu.total + '</span></div><div class="pb" style="display:flex;flex-direction:column;gap:10px"><div class="bar" style="height:6px"><span style="width:' + Math.round(100 * uu.done / uu.total) + '%"></span></div>' +
+          '<span class="sub">The rules run once every required document is in. Still missing:</span>' + uu.missing.map(function (m) { return '<div class="q-next" style="padding:0"><span class="st pend"></span><span class="tx" style="color:var(--ink)">' + E(m) + '</span></div>'; }).join('') + '</div></section>');
       } else if (c.stage === 'notyet' && !c.reg) {
         leftp.push('<section class="panel"><div class="ph">Decision</div><div class="pb">' + badge('Not yet', 'err') + ' <span class="sub">' + E(c.reason) + '. Signed by two officers on ' + D.long(c.decided) + '.</span></div></section>');
       } else if (c.reg) {
@@ -346,7 +346,7 @@
       if (c.stage === 'check') return (c.review.scope ? 'Gaps only' : 'Check') + ' · due ' + D.short(c.due);
       if (c.stage === 'sign') return 'Key 2 · due ' + D.short(c.due);
       if (c.stage === 'plan') return 'Plan due ' + D.short(c.due);
-      if (c.stage === 'uploading') return c.uploads.done + '/' + c.uploads.total + ' documents';
+      if (c.stage === 'uploading') return S.uploads(c).done + '/' + S.uploads(c).total + ' documents';
       if (c.stage === 'qualified') return c.mark && c.mark.withdrawn ? 'Withdrawn' : 'Re-check ' + D.month(c.mark.validTo);
       return c.reason || '';
     }

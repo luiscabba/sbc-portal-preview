@@ -1,12 +1,12 @@
 /* SBC portal store: demo state kept in this browser, the written rules, the match rules and every action.
    Every view reads from SBC.data and changes it only through SBC.act, which also writes the audit log. */
 (function () {
-  var KEY = 'sbc-portal-demo', VERSION = 3;
+  var KEY = 'sbc-portal-demo', VERSION = 4;
   var seed = window.SBC_SEED;
   var listeners = [];
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
-  function fresh(prev) { return { v: VERSION, data: clone(seed), session: { officer: 'A', signedIn: prev ? !!prev.session.signedIn : false } }; }
+  function fresh(prev) { return { v: VERSION, data: clone(seed), session: { officer: 'A', signedIn: prev ? !!prev.session.signedIn : false, company: 'orrin' } }; }
   function load() {
     try { var s = JSON.parse(localStorage.getItem(KEY)); if (s && s.v === VERSION && s.data) return s; } catch (e) {}
     return fresh();
@@ -75,6 +75,24 @@
     { id: 'M-4', stage: 'Ranked', text: 'Ordered by relevant references' }
   ];
 
+  var EVIDENCE = [
+    { name: 'Certificate of incorporation or trade licence', hint: 'As issued in your home country' },
+    { name: 'Register extract', hint: 'From your company register, less than three months old' },
+    { name: 'Shareholder register', hint: 'Certified, showing every shareholder' },
+    { name: 'Ownership chart', hint: 'Every company up to the people who own it' },
+    { name: 'IDs for owners and directors', hint: 'Names and dates of birth, for screening' },
+    { name: 'Licences and certifications', hint: 'Sector licences, ISO and similar' },
+    { name: 'Audited accounts, last two years', hint: 'Signed by your auditor' },
+    { name: 'Company profile and references', hint: 'Work of the kind you want in the Gulf' },
+    { name: 'Declaration signed by a director', hint: 'Confirms the file is true and complete' },
+    { name: 'ICV certificate', hint: 'If you have one. Not a pass condition', optional: true },
+    { name: 'Local entity or agent agreement', hint: 'If you have one. Not a pass condition', optional: true }
+  ];
+  function uploads(c) {
+    var have = (c.uploads && c.uploads.have) || [];
+    var missing = EVIDENCE.filter(function (e) { return !e.optional && have.indexOf(e.name) < 0; }).map(function (e) { return e.name; });
+    return { have: have, done: have.length, total: EVIDENCE.length, missing: missing, ready: !missing.length };
+  }
   function presence(c, country) { var l = (c.local || {})[country] || {}; return l.icv || l.entity || l.agent ? l : null; }
   function presenceText(l) {
     if (!l) return '';
@@ -241,6 +259,7 @@
   var act = {
     signIn: function () { state.session.signedIn = true; return commit(); },
     signOut: function () { state.session.signedIn = false; return commit(); },
+    setCompany: function (id) { state.session.company = id; return commit(); },
     switchOfficer: function () { state.session.officer = other(me()); return commit('Now signed in as ' + officerName(me())); },
     reset: function () { state = fresh(state); save(); notify(); return 'Demo data reset'; },
 
@@ -329,6 +348,50 @@
       return commit();
     },
 
+    /* company portal */
+    upload: function (id, name) {
+      var c = company(id); c.uploads = c.uploads || { have: [] };
+      if (c.uploads.have.indexOf(name) < 0) c.uploads.have.push(name);
+      log('company', 'Uploaded a document', id, name, 'change');
+      return commit(name + ' uploaded');
+    },
+    removeUpload: function (id, name) { var c = company(id), h = c.uploads.have, i = h.indexOf(name); if (i >= 0) h.splice(i, 1); return commit(); },
+    submitEvidence: function (id) {
+      var c = company(id), u = uploads(c), city = c.city || '';
+      c.reg = c.reg || { registry: '[Company register], ' + c.country, number: '[registration number]', name: c.name, status: 'Active', insolvency: false, incorporated: c.founded || '2012-01-01', address: (c.address || '[registered address]') + (city ? ', ' + city : ''), directors: [c.contact], lastEntry: D().today };
+      c.signatory = c.signatory || c.contact;
+      c.owners = c.owners || [{ name: c.contact, kind: 'person', pct: 100, of: 'self', src: 'official' }];
+      c.licences = c.licences || [{ name: 'ISO 9001:2015', issuer: '[Certification body]', holder: c.name, expires: date.add(TODAY, 640) }];
+      c.screening = { run: TODAY, parties: [c.name].concat(c.owners.filter(function (o) { return o.kind === 'person'; }).map(function (o) { return o.name; })), hits: [] };
+      c.local = c.local || {};
+      (c.target || []).forEach(function (k) { c.local[k] = c.local[k] || {}; if (u.have.indexOf('Local entity or agent agreement') >= 0 && !presence(c, k)) c.local[k].agent = '[Agent named in your upload]'; if (u.have.indexOf('ICV certificate') >= 0 && !c.local[k].icv) c.local[k].icv = '[score]'; });
+      c.review = { round: 1, scope: null, k1: null, k2: null };
+      c.stage = 'check'; c.since = TODAY; c.sent = TODAY; c.due = date.add(TODAY, 3); c.owner = null;
+      log('company', 'Sent the evidence to SBC', id, u.done + ' of ' + u.total + ' documents', 'change');
+      log('rules', 'Ran the five checks', id, 'First review', 'rules', 'v1.0');
+      return commit('Sent to SBC. The rules have checked your file');
+    },
+    tickPlan: function (id, itemId, done) {
+      var c = company(id), it = c.plan.items.filter(function (x) { return x.id === itemId; })[0];
+      it.done = done; if (done) log('company', 'Marked a plan item done', id, it.text, 'change');
+      return commit();
+    },
+    sendFixes: function (id) { var c = company(id); act.submitFixes(id); return 'Sent to SBC. The rules re-ran the checks with gaps'; },
+    respond: function (oid, cid, v) {
+      var o = opp(oid), it = o.intros.filter(function (x) { return x.company === cid; })[0];
+      it.status = v === 'accept' ? 'meeting' : 'declined'; it.at = TODAY;
+      log('company', v === 'accept' ? 'Accepted an introduction' : 'Declined an introduction', oid, company(cid).short, 'change');
+      return commit(v === 'accept' ? 'Accepted. SBC will arrange the first meeting' : 'Declined. SBC will let them know');
+    },
+    register: function (f) {
+      var id = 'co' + (D().companies.length + 1) + '-' + String(Date.now()).slice(-4);
+      var short = f.name.replace(/,? (GmbH|Ltd\.?|Limited|LLC|Inc\.?|S\.A\.|S\.L\.|BV|AS|AB|Pty Ltd|Pvt Ltd|S\.r\.l\.|Co\., Ltd\.)$/i, '');
+      D().companies.push({ id: id, name: f.name, short: short, country: f.country, city: f.city, sector: f.sector, target: f.target, applied: TODAY, stage: 'uploading', since: TODAY, owner: null,
+        capabilities: [], refs: 0, raising: !!f.raising, contact: f.contact, email: f.email, founded: null, uploads: { have: [] }, isNew: true });
+      log('company', 'Registered', id, f.country + ' \u00b7 ' + (f.target || []).join(', '), 'change');
+      return commit() || id;
+    },
+
     /* opportunities */
     shortlist: function (oid, ids) {
       var o = opp(oid);
@@ -374,6 +437,6 @@
     company: company, opp: opp, party: party, agent: agent, officerName: officerName, me: me, other: other,
     CHECKS: CHECKS, RULES: RULES, MATCH_RULES: MATCH_RULES,
     evaluate: evaluate, answers: answers, checkStatus: checkStatus, progress: progress, requested: requested, proposal: proposal, inScope: inScope,
-    match: match, markCurrent: markCurrent, presence: presence, presenceText: presenceText
+    match: match, markCurrent: markCurrent, presence: presence, presenceText: presenceText, EVIDENCE: EVIDENCE, uploads: uploads
   };
 })();

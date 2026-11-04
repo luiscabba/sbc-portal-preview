@@ -13,11 +13,6 @@
  ],
  "redirects": [
   {
-   "source": "/company",
-   "destination": "/app/cRegister",
-   "permanent": false
-  },
-  {
    "source": "/buyer",
    "destination": "/app/bNeed",
    "permanent": false

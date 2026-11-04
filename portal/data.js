@@ -105,11 +105,11 @@ window.SBC_SEED = {
     },
     { id: 'hanbit', name: 'Hanbit Pipeline Co., Ltd.', short: 'Hanbit Pipeline', country: 'South Korea', city: 'Ulsan', sector: 'energy', target: ['KSA'],
       applied: '2026-10-22', stage: 'uploading', since: '2026-10-29', owner: 'B', capabilities: ['pipeline'], refs: 4, raising: false, contact: 'Park Ji-ho',
-      uploads: { done: 9, total: 11, missing: ['Audited accounts, last two years', 'Shareholder register'] }
+      uploads: { have: ['Certificate of incorporation or trade licence', 'Register extract', 'Ownership chart', 'IDs for owners and directors', 'Licences and certifications', 'Company profile and references', 'Local entity or agent agreement', 'Declaration signed by a director', 'ICV certificate'] }
     },
     { id: 'corvel', name: 'Corvel Fire Safety Ltd', short: 'Corvel Fire Safety', country: 'Ireland', city: 'Cork', sector: 'construction', target: ['UAE'],
       applied: '2026-11-01', stage: 'uploading', since: '2026-11-01', owner: null, capabilities: ['fire-safety'], refs: 1, raising: true, contact: 'Siobhán Walsh',
-      uploads: { done: 2, total: 11, missing: ['Register extract', 'Shareholder register', 'Licences', 'Owner IDs'] }
+      uploads: { have: ['Certificate of incorporation or trade licence', 'Company profile and references'] }
     },
     { id: 'brunnvik', name: 'Brunnvik Water AS', short: 'Brunnvik Water', country: 'Norway', city: 'Bergen', sector: 'water', target: ['UAE', 'Bahrain'],
       applied: '2026-07-14', stage: 'qualified', since: '2026-08-02', owner: 'B', capabilities: ['ro-maintenance', 'plant-audit'], refs: 5, raising: true,
@@ -215,7 +215,7 @@ window.SBC_SEED = {
     { id: 'n4', kind: 'need', title: 'Solar plant O&M', from: 'b-dsd', country: 'UAE', sector: 'energy', capability: 'solar-om',
       value: '[AED value]', posted: '2026-10-08', closes: '2026-11-15', stage: 'introduced', source: 'Posted',
       brief: 'Operation and maintenance for a 120 MW solar plant near Dubai.', released: { by: 'A', at: '2026-10-28' },
-      intros: [{ company: 'lumen', status: 'meeting', at: '2026-10-28' }] },
+      intros: [{ company: 'lumen', status: 'released', at: '2026-10-28' }] },
     { id: 'n5', kind: 'need', title: 'Medical equipment servicing', from: 'b-dhg', country: 'UAE', sector: 'healthcare', capability: 'medical-servicing',
       value: '[AED value]', posted: '2026-11-02', closes: '2026-12-15', stage: 'match', source: 'Posted',
       brief: 'Servicing for imaging and lab equipment across three hospitals.', intros: [] },
