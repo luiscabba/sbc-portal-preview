@@ -1,12 +1,12 @@
 /* SBC portal store: demo state kept in this browser, the written rules, the match rules and every action.
    Every view reads from SBC.data and changes it only through SBC.act, which also writes the audit log. */
 (function () {
-  var KEY = 'sbc-portal-demo', VERSION = 4;
+  var KEY = 'sbc-portal-demo', VERSION = 5;
   var seed = window.SBC_SEED;
   var listeners = [];
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
-  function fresh(prev) { return { v: VERSION, data: clone(seed), session: { officer: 'A', signedIn: prev ? !!prev.session.signedIn : false, company: 'orrin' } }; }
+  function fresh(prev) { return { v: VERSION, data: clone(seed), session: { officer: 'A', signedIn: prev ? !!prev.session.signedIn : false, company: 'orrin', buyer: 'b-adwu' } }; }
   function load() {
     try { var s = JSON.parse(localStorage.getItem(KEY)); if (s && s.v === VERSION && s.data) return s; } catch (e) {}
     return fresh();
@@ -221,8 +221,9 @@
     });
     var s2 = [], d2 = [];
     s1.forEach(function (c) {
-      var ok = o.kind === 'mandate' ? c.raising : (c.capabilities || []).indexOf(o.capability) >= 0;
-      if (ok) s2.push(c); else d2.push({ c: c, why: o.kind === 'mandate' ? 'Not open to investment' : 'No ' + (seed.capabilities[o.capability] || '').toLowerCase() + ' work on record' });
+      var want = o.capabilities || [o.capability];
+      var ok = o.kind === 'mandate' ? c.raising : want.some(function (k) { return (c.capabilities || []).indexOf(k) >= 0; });
+      if (ok) s2.push(c); else d2.push({ c: c, why: o.kind === 'mandate' ? 'Not open to investment' : 'No ' + want.map(function (k) { return (seed.capabilities[k] || '').toLowerCase(); }).join(' or ') + ' work on record' });
     });
     var s3 = [], d3 = [];
     s2.forEach(function (c) {
@@ -260,6 +261,7 @@
     signIn: function () { state.session.signedIn = true; return commit(); },
     signOut: function () { state.session.signedIn = false; return commit(); },
     setCompany: function (id) { state.session.company = id; return commit(); },
+    setBuyer: function (id) { state.session.buyer = id; return commit(); },
     switchOfficer: function () { state.session.officer = other(me()); return commit('Now signed in as ' + officerName(me())); },
     reset: function () { state = fresh(state); save(); notify(); return 'Demo data reset'; },
 
@@ -417,6 +419,33 @@
       log(me(), 'Logged the outcome', oid, company(cid).short + ' · ' + status, 'change');
       return commit('Outcome logged');
     },
+
+    /* buyers */
+    postNeed: function (f) {
+      var n = D().opps.length + 1, id = (f.kind === 'tender' ? 't' : 'n') + n + '-' + String(Date.now()).slice(-4);
+      var o = { id: id, kind: f.kind, title: f.title, from: f.from, country: f.country, sector: f.sector, capability: f.capabilities[0], capabilities: f.capabilities,
+        value: f.value || '[value]', posted: TODAY, closes: f.closes, stage: 'match', source: 'Posted', brief: f.brief || '', intros: [] };
+      if (f.kind === 'tender') { o.ref = f.ref; o.dates = { questions: f.questions, bids: f.closes, opening: f.opening }; }
+      D().opps.push(o);
+      log('buyer', f.kind === 'tender' ? 'Posted a tender' : 'Posted a need', id, f.title, 'change');
+      commit(); return id;
+    },
+    askIntro: function (bid, cid, nid, note) {
+      var c = company(cid), nd = nid ? opp(nid) : null, id = 'r' + (D().opps.length + 1) + '-' + String(Date.now()).slice(-4);
+      D().opps.push({ id: id, kind: 'request', title: nd ? nd.title : 'Meet ' + c.short, from: bid, company: cid, need: nid || null, country: nd ? nd.country : (party(bid) || {}).country,
+        sector: c.sector, value: nd ? nd.value : '', posted: TODAY, closes: nd ? nd.closes : date.add(TODAY, 30), stage: 'match', source: 'Directory',
+        brief: 'Found ' + c.short + ' in the directory and asked to meet them.' + (note ? ' Note: ' + note : ''), intros: [] });
+      log('buyer', 'Asked for an introduction', id, c.short + ' · from the directory', 'change');
+      return commit('Sent to SBC. Two officers will review it');
+    },
+    buyerOutcome: function (oid, cid, status) {
+      var o = opp(oid), it = o.intros.filter(function (x) { return x.company === cid; })[0];
+      it.status = status; it.at = TODAY;
+      if (o.intros.every(function (x) { return x.status === 'won' || x.status === 'lost' || x.status === 'declined'; })) o.stage = 'closed';
+      log('buyer', status === 'won' ? 'Chose a company' : 'Passed on a company', oid, company(cid).short, 'change');
+      return commit(status === 'won' ? 'Recorded. SBC will tell ' + company(cid).short : 'Recorded. SBC will let them know');
+    },
+    closeNeed: function (oid) { var o = opp(oid); o.stage = 'closed'; o.closedAt = TODAY; log('buyer', 'Closed a need', oid, o.title, 'change'); return commit('Closed'); },
 
     addAgent: function (a) {
       a.id = 'a' + (D().agents.length + 1); a.referrals = 0; a.status = 'review'; a.licenceTo = a.licenceTo || null;

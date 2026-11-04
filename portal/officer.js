@@ -452,7 +452,7 @@
     rows.forEach(function (a) {
       var d = a.t.slice(0, 10);
       if (groupByDay && d !== day) { day = d; html += '<tr><td colspan="6" class="muted" style="height:30px;font-size:12px;background:var(--wash)">' + (D.when(d) === 'Today' || D.when(d) === 'Yesterday' ? D.when(d) : D.long(d)) + '</td></tr>'; }
-      var who = a.who === 'rules' ? '<span class="av" style="background:#E3EAFD;color:#1F4FD1">R</span>Rules' : a.who === 'company' ? '<span class="av" style="background:#E6E8EC;color:#3D4250">Co</span>Company' : '<span class="av">' + E(a.who) + '</span>' + E(S.officerName(a.who));
+      var who = a.who === 'rules' ? '<span class="av" style="background:#E3EAFD;color:#1F4FD1">R</span>Rules' : a.who === 'company' ? '<span class="av" style="background:#E6E8EC;color:#3D4250">Co</span>Company' : a.who === 'buyer' ? '<span class="av" style="background:#DAEEEF;color:#0A5C63">Bu</span>Buyer' : '<span class="av">' + E(a.who) + '</span>' + E(S.officerName(a.who));
       var f = S.company(a.file) || S.opp(a.file), fl = f ? '<a href="#' + (S.company(a.file) ? 'company/' : 'opp/') + a.file + '">' + E(f.short || f.title) + '</a>' : E(a.file);
       html += '<tr><td class="mono muted" style="width:64px">' + a.t.slice(11, 16) + '</td><td><span style="display:inline-flex;align-items:center;gap:8px">' + who + '</span></td><td>' + E(a.action) + '</td><td>' + fl + '</td><td>' + (a.detail ? badge(a.detail, a.tag === 'sign' ? 'info' : a.tag === 'rules' ? 'ok' : '') : '') + '</td><td class="mono muted r">' + E(a.ver) + '</td></tr>';
     });

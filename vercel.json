@@ -10,12 +10,5 @@
     }
    ]
   }
- ],
- "redirects": [
-  {
-   "source": "/buyer",
-   "destination": "/app/bNeed",
-   "permanent": false
-  }
  ]
 }
